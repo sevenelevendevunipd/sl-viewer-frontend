@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import { LogParserResponse_4dfe1dd } from './openapi';
+
+import { Button } from 'primereact/button';
+
+
+import "./themes/theme.scss";
+import "primereact/resources/primereact.css";
+import "primeicons/primeicons.css";
+import "primeflex/primeflex.css";
+
+import LogUploader from './components/LogUploader';
+import LogViewer from './components/LogViewer';
+import { ThemeSwitcher } from './components/ThemeSwitcher';
+import { ReactComponent as Logo } from './logo.svg';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  const [log, setLog] = useState<LogParserResponse_4dfe1dd | undefined>(undefined);
+  return (<div>
+    <nav className='w-screen flex flex-row justify-content-between surface-ground p-1 px-3'>
+      <Logo className='h-3rem w-auto my-1' id='logo' />
+      {log !== undefined ? <Button className='my-2' label="Upload another log" icon="pi pi-upload" onClick={() => setLog(undefined)} /> : null}
+      <ThemeSwitcher />
+    </nav>
+    <div className='mt-2'>
+      {log === undefined ? <LogUploader setLog={setLog} /> : <LogViewer log={log} />}
     </div>
-  );
+  </div>);
 }
 
 export default App;
