@@ -17,9 +17,9 @@ import { ReactComponent as Logo } from './logo.svg';
 function App() {
   const [log, setLog] = useState<LogParserResponse_4dfe1dd | undefined>(undefined);
   return (<div>
-    <nav className='w-screen flex flex-row justify-content-between surface-ground p-1 px-3'>
-      <Logo className='h-3rem w-auto my-1' id='logo' />
-      {log !== undefined ? <Button className='my-2' label="Upload another log" icon="pi pi-upload" onClick={() => setLog(undefined)} /> : null}
+    <nav className='w-full flex flex-row justify-content-between surface-ground p-3'>
+      <Logo className='h-3rem w-auto' id='logo' />
+      {log !== undefined ? <Button label="Upload another log" icon="pi pi-upload" onClick={() => setLog(undefined)} /> : null}
       <ThemeSwitcher />
     </nav>
     <div className='mt-2'>
