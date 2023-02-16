@@ -1,14 +1,17 @@
-import { useEffect, useState } from 'react'
-
+import { createContext, useContext, useEffect, useState } from 'react'
+import * as echarts from 'echarts';
 import { InputSwitch } from 'primereact/inputswitch';
-
-interface ThemeSetter {
-    (theme: string): void
-}
+import echartsDarkTheme from '../themes/dark.json';
+import echartsLightTheme from '../themes/light.json';
 
 const validThemes = ["dark", "light"];
 const defaultTheme = "light";
 const themeLsKey = "theme";
+
+type ThemeState = [string, (theme: string) => void];
+
+echarts.registerTheme("dark", echartsDarkTheme)
+echarts.registerTheme("light", echartsLightTheme)
 
 function setThemeToLs(theme: string) {
     localStorage.setItem(themeLsKey, theme);
@@ -24,21 +27,34 @@ function getThemeFromLs(): string {
     return lsTheme;
 }
 
-function useTheme(): [string, ThemeSetter] {
+export const ThemeContext = createContext<ThemeState>(["", ()=>{}]);
+
+function useTheme(): ThemeState {
     const [theme, setTheme] = useState(getThemeFromLs());
     const themedElement = document.documentElement;
     useEffect(() => {
         themedElement.classList.add(theme)
     });
-    return [theme, (newTheme: string) => {
+    return [theme, (newTheme) => {
         setThemeToLs(newTheme)
         themedElement.classList.replace(theme, newTheme)
         setTheme(newTheme)
     }]
 }
 
-export function ThemeSwitcher(): JSX.Element {
+type ThemeProviderProps = {
+    children: string | JSX.Element | JSX.Element[]
+};
+
+export function ThemeProvider({children}: ThemeProviderProps) {
     const [theme, setTheme] = useTheme();
+    return (<ThemeContext.Provider value={[theme, setTheme]}>
+        {children}
+    </ThemeContext.Provider>)
+}
+
+export function ThemeSwitcher(): JSX.Element {
+    const [theme, setTheme] = useContext(ThemeContext);
     return <div className='flex align-items-center'>
         <i className='pi pi-sun text-2xl' />
         <InputSwitch className='mx-2' checked={theme === 'dark'} onChange={(e) => { setTheme(e.value ? 'dark' : 'light') }} />

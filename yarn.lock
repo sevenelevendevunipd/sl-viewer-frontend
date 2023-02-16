@@ -700,7 +700,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-flow@npm:^7.18.6":
+"@babel/plugin-syntax-flow@npm:*, @babel/plugin-syntax-flow@npm:^7.18.6":
   version: 7.18.6
   resolution: "@babel/plugin-syntax-flow@npm:7.18.6"
   dependencies:
@@ -1176,7 +1176,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-react-jsx@npm:^7.18.6":
+"@babel/plugin-transform-react-jsx@npm:*, @babel/plugin-transform-react-jsx@npm:^7.18.6":
   version: 7.20.13
   resolution: "@babel/plugin-transform-react-jsx@npm:7.20.13"
   dependencies:
@@ -2500,9 +2500,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:^8.5.0":
-  version: 8.20.0
-  resolution: "@testing-library/dom@npm:8.20.0"
+"@testing-library/dom@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "@testing-library/dom@npm:9.0.0"
   dependencies:
     "@babel/code-frame": ^7.10.4
     "@babel/runtime": ^7.12.5
@@ -2512,11 +2512,11 @@ __metadata:
     dom-accessibility-api: ^0.5.9
     lz-string: ^1.4.4
     pretty-format: ^27.0.2
-  checksum: 1e599129a2fe91959ce80900a0a4897232b89e2a8e22c1f5950c36d39c97629ea86b4986b60b173b5525a05de33fde1e35836ea597b03de78cc51b122835c6f0
+  checksum: 5381bf9438f0ee35f795e7f9b203564aa455e7cd838b6677084c82dd56396779c38cc49ddffed4e57a8bcc3c62b4bc96ea684bb4b24d13655152db745327b2cd
   languageName: node
   linkType: hard
 
-"@testing-library/jest-dom@npm:^5.14.1":
+"@testing-library/jest-dom@npm:^5.16.5":
   version: 5.16.5
   resolution: "@testing-library/jest-dom@npm:5.16.5"
   dependencies:
@@ -2533,21 +2533,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^13.0.0":
-  version: 13.4.0
-  resolution: "@testing-library/react@npm:13.4.0"
+"@testing-library/react@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "@testing-library/react@npm:14.0.0"
   dependencies:
     "@babel/runtime": ^7.12.5
-    "@testing-library/dom": ^8.5.0
+    "@testing-library/dom": ^9.0.0
     "@types/react-dom": ^18.0.0
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 51ec548c1fdb1271089a5c63e0908f0166f2c7fcd9cacd3108ebbe0ce64cb4351812d885892020dc37608418cfb15698514856502b3cab0e5cc58d6cc1bd4a3e
+  checksum: 4a54c8f56cc4a39b50803205f84f06280bb76521d6d5d4b3b36651d760c7c7752ef142d857d52aaf4fad4848ed7a8be49afc793a5dda105955d2f8bef24901ac
   languageName: node
   linkType: hard
 
-"@testing-library/user-event@npm:^14.4":
+"@testing-library/user-event@npm:^14.4.3":
   version: 14.4.3
   resolution: "@testing-library/user-event@npm:14.4.3"
   peerDependencies:
@@ -2805,7 +2805,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:*, @types/jest@npm:^29.4":
+"@types/jest@npm:*, @types/jest@npm:^29.4.0":
   version: 29.4.0
   resolution: "@types/jest@npm:29.4.0"
   dependencies:
@@ -2836,10 +2836,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^18.13":
+"@types/node@npm:*":
   version: 18.13.0
   resolution: "@types/node@npm:18.13.0"
   checksum: 4ea10f8802848b01672bce938f678b6774ca2cee0c9774f12275ab064ae07818419c3e2e41d6257ce7ba846d1ea26c63214aa1dfa4166fa3746291752b8c6416
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^18.14.0":
+  version: 18.14.0
+  resolution: "@types/node@npm:18.14.0"
+  checksum: d83fcf5e4ed544755dd9028f5cbb6b9d46235043159111bb2ad62223729aee581c0144a9f6df8ba73d74011db9ed4ebd7af2fd5e0996714e3beb508a5da8ac5c
   languageName: node
   linkType: hard
 
@@ -2894,6 +2901,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-dom@npm:^18.0.11":
+  version: 18.0.11
+  resolution: "@types/react-dom@npm:18.0.11"
+  dependencies:
+    "@types/react": "*"
+  checksum: 579691e4d5ec09688087568037c35edf8cfb1ab3e07f6c60029280733ee7b5c06d66df6fcc90786702c93ac8cb13bc7ff16c79ddfc75d082938fbaa36e1cdbf4
+  languageName: node
+  linkType: hard
+
 "@types/react-transition-group@npm:^4.4.1":
   version: 4.4.5
   resolution: "@types/react-transition-group@npm:4.4.5"
@@ -2903,7 +2919,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.0.0":
+"@types/react@npm:*":
   version: 18.0.27
   resolution: "@types/react@npm:18.0.27"
   dependencies:
@@ -2911,6 +2927,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 600fdbc39a92ea4a77047db3e12f05f67776a710f5918248c0189a59ac2a38900c9db5a5d2e433a16df528a3ecab1aa114b322cacea573bb1ca2fc0b094c52d1
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.0.28":
+  version: 18.0.28
+  resolution: "@types/react@npm:18.0.28"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: e752df961105e5127652460504785897ca6e77259e0da8f233f694f9e8f451cde7fa0709d4456ade0ff600c8ce909cfe29f9b08b9c247fa9b734e126ec53edd7
   languageName: node
   linkType: hard
 
@@ -5601,6 +5628,29 @@ __metadata:
   version: 0.2.0
   resolution: "eastasianwidth@npm:0.2.0"
   checksum: 7d00d7cd8e49b9afa762a813faac332dee781932d6f2c848dc348939c4253f1d4564341b7af1d041853bc3f32c2ef141b58e0a4d9862c17a7f08f68df1e0f1ed
+  languageName: node
+  linkType: hard
+
+"echarts-for-react@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "echarts-for-react@npm:3.0.2"
+  dependencies:
+    fast-deep-equal: ^3.1.3
+    size-sensor: ^1.0.1
+  peerDependencies:
+    echarts: ^3.0.0 || ^4.0.0 || ^5.0.0
+    react: ^15.0.0 || >=16.0.0
+  checksum: d3b16325befb1294d99f6f089462415be739c1654370945eef2172efd5868596f10e4cd021e0ff65b89a6f9de5e9c331ccf3765d9167ccb12d573f9632b5b7a6
+  languageName: node
+  linkType: hard
+
+"echarts@npm:^5.4.1":
+  version: 5.4.1
+  resolution: "echarts@npm:5.4.1"
+  dependencies:
+    tslib: 2.3.0
+    zrender: 5.4.1
+  checksum: 2868541087045d27691e99950a96896da48be2c758cb9cd6ab57244bfa40967edecc5a215e02f63a48fa9d56aa1dc91c8339982fdb8d2b1323b19852e91d9fa8
   languageName: node
   linkType: hard
 
@@ -10698,17 +10748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^7.0.35":
-  version: 7.0.39
-  resolution: "postcss@npm:7.0.39"
-  dependencies:
-    picocolors: ^0.2.1
-    source-map: ^0.6.1
-  checksum: 4ac793f506c23259189064bdc921260d869a115a82b5e713973c5af8e94fbb5721a5cc3e1e26840500d7e1f1fa42a209747c5b1a151918a9bc11f0d7ed9048e3
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.0.9, postcss@npm:^8.3.5, postcss@npm:^8.4.19, postcss@npm:^8.4.4":
+"postcss@npm:*, postcss@npm:^8.0.9, postcss@npm:^8.3.5, postcss@npm:^8.4.19, postcss@npm:^8.4.4":
   version: 8.4.21
   resolution: "postcss@npm:8.4.21"
   dependencies:
@@ -10716,6 +10756,16 @@ __metadata:
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
   checksum: e39ac60ccd1542d4f9d93d894048aac0d686b3bb38e927d8386005718e6793dbbb46930f0a523fe382f1bbd843c6d980aaea791252bf5e176180e5a4336d9679
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^7.0.35":
+  version: 7.0.39
+  resolution: "postcss@npm:7.0.39"
+  dependencies:
+    picocolors: ^0.2.1
+    source-map: ^0.6.1
+  checksum: 4ac793f506c23259189064bdc921260d869a115a82b5e713973c5af8e94fbb5721a5cc3e1e26840500d7e1f1fa42a209747c5b1a151918a9bc11f0d7ed9048e3
   languageName: node
   linkType: hard
 
@@ -10798,9 +10848,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"primereact@npm:^9.0.0-beta.1":
-  version: 9.0.0-rc.1
-  resolution: "primereact@npm:9.0.0-rc.1"
+"primereact@npm:^9.2.0":
+  version: 9.2.0
+  resolution: "primereact@npm:9.2.0"
   dependencies:
     "@types/react-transition-group": ^4.4.1
     react-transition-group: ^4.4.1
@@ -10812,7 +10862,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 0823c3eec4490a76ec9ec4496054a302a13a2674e6a0d465b4e71fd1df33f18faf4f29e17783bf5f97056e45ac4240fc197f8c3a252cd0aa9c722177e764218d
+  checksum: f5162be5aa90f8947eab74aa00d7a659bf1c2fbf9944dc431fc84e0a1fc602f7a887c3bf0594a6c89e6b87c5f5efbfe9b84a38a4d4f4f0efbbca0e72d8d21ff8
   languageName: node
   linkType: hard
 
@@ -11089,7 +11139,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-scripts@npm:5.0.1":
+"react-scripts@npm:^5.0.1":
   version: 5.0.1
   resolution: "react-scripts@npm:5.0.1"
   dependencies:
@@ -11621,16 +11671,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.58.0":
-  version: 1.58.0
-  resolution: "sass@npm:1.58.0"
+"sass@npm:^1.58.3":
+  version: 1.58.3
+  resolution: "sass@npm:1.58.3"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: a7219634881d2de6441fb619787fb1a02e3fa0333fb715be26aa335ba49d6bdb4f1105d9df70a80a67200893022b08346745783dc49046095d94fc6e044492d6
+  checksum: 35a2b98c037ef80fdc93c9b0be846e6ccc7d75596351a37ee79c397e66666d0a754c52c4696e746c0aff32327471e185343ca349e998a58340411adc9d0489a5
   languageName: node
   linkType: hard
 
@@ -11921,32 +11971,43 @@ __metadata:
   languageName: node
   linkType: hard
 
+"size-sensor@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "size-sensor@npm:1.0.1"
+  checksum: 8af239ea1acac3f9e1fe1b6cc0436b7cd2105c0eee56cebfdc71ec1b6ec9fcb3065bd4214c59aa6615b58f778ac4732056a8d1e909506dacaef476220f27bec3
+  languageName: node
+  linkType: hard
+
 "sl-viewer-frontend@workspace:.":
   version: 0.0.0-use.local
   resolution: "sl-viewer-frontend@workspace:."
   dependencies:
     "@craco/craco": ^7.0.0
-    "@testing-library/jest-dom": ^5.14.1
-    "@testing-library/react": ^13.0.0
-    "@testing-library/user-event": ^14.4
-    "@types/jest": ^29.4
-    "@types/node": ^18.13
-    "@types/react": ^18.0.0
-    "@types/react-dom": ^18.0.0
+    "@testing-library/dom": ^9.0.0
+    "@testing-library/jest-dom": ^5.16.5
+    "@testing-library/react": ^14.0.0
+    "@testing-library/user-event": ^14.4.3
+    "@types/jest": ^29.4.0
+    "@types/node": ^18.14.0
+    "@types/react": ^18.0.28
+    "@types/react-dom": ^18.0.11
     dotenv-run-script: ^0.2.0
     dotenv-webpack: ^8.0.1
+    echarts: ^5.4.1
+    echarts-for-react: ^3.0.2
     openapi-typescript: ^6.1.0
     openapi-typescript-codegen: ^0.23.0
     primeflex: ^3.3.0
     primeicons: ^6.0.1
-    primereact: ^9.0.0-beta.1
+    primereact: ^9.2.0
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-scripts: 5.0.1
-    sass: ^1.58.0
+    react-scripts: ^5.0.1
+    sass: ^1.58.3
     serve: ^14.2.0
-    typescript: ^4.4.2
-    web-vitals: ^3.1
+    typescript: ^4.9.5
+    web-vitals: ^3.1.1
+    webpack: ^5.75.0
   languageName: unknown
   linkType: soft
 
@@ -12755,6 +12816,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tslib@npm:2.3.0":
+  version: 2.3.0
+  resolution: "tslib@npm:2.3.0"
+  checksum: 8869694c26e4a7b56d449662fd54a4f9ba872c889d991202c74462bd99f10e61d5bd63199566c4284c0f742277736292a969642cc7b590f98727a7cae9529122
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
@@ -12863,7 +12931,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.4.2":
+"typescript@npm:^4.9.5":
   version: 4.9.5
   resolution: "typescript@npm:4.9.5"
   bin:
@@ -12873,7 +12941,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.4.2#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.9.5#~builtin<compat/typescript>":
   version: 4.9.5
   resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"
   bin:
@@ -13162,7 +13230,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-vitals@npm:^3.1":
+"web-vitals@npm:^3.1.1":
   version: 3.1.1
   resolution: "web-vitals@npm:3.1.1"
   checksum: 26d552d7e0bba470e1426bbf55c3c1a701c683bbde4553791a2c7e1bc3a7b7b29bf66ccf67c74872af3aa39e5668728736b90f8b3fee2910c0c566e7eb1b6096
@@ -13298,7 +13366,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.64.4":
+"webpack@npm:^5.64.4, webpack@npm:^5.75.0":
   version: 5.75.0
   resolution: "webpack@npm:5.75.0"
   dependencies:
@@ -13863,5 +13931,14 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
+  languageName: node
+  linkType: hard
+
+"zrender@npm:5.4.1":
+  version: 5.4.1
+  resolution: "zrender@npm:5.4.1"
+  dependencies:
+    tslib: 2.3.0
+  checksum: 9a50cc2cc42ef44a436cfca5a29d6378b92790f50755b4d54f513a55dc7dab9698cecbc5640d731b380ad282aab1c33ae8cc1d14b61c0d51f0e951085a1bf17c
   languageName: node
   linkType: hard

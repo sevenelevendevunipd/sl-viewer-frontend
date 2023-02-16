@@ -49,12 +49,14 @@ function LogUploader(props: LogUploaderProps) {
         }
     }
     return (
-        <Card className='max-w-30rem m-auto' title='Upload a log file'>
-            <Toast ref={toasts} onHide={dismissError} />
-            {isLoading ?
-                <div className='flex justify-content-center'><ProgressSpinner className='m-auto'></ProgressSpinner></div> :
-                <FileUpload name="log" accept="text/csv" customUpload uploadHandler={logFileUploader} disabled={isLoading} />}
-        </Card>
+        <div className='grid'>
+            <Card className='m-auto col-4' title='Upload a log file'>
+                <Toast ref={toasts} onHide={dismissError} />
+                {isLoading ?
+                    <div className='flex justify-content-center'><ProgressSpinner className='m-auto'></ProgressSpinner></div> :
+                    <FileUpload name="log" accept="text/csv" customUpload uploadHandler={logFileUploader} disabled={isLoading} />}
+            </Card>
+        </div>
     )
 }
 

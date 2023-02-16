@@ -8,6 +8,7 @@ import { Tree, TreeCheckboxSelectionKeys, TreeExpandedKeysType } from 'primereac
 import { LogParserResponse_4dfe1dd } from "../openapi";
 import { selectAllTreeEntries } from "../utils"
 import { Button } from 'primereact/button';
+import { Timeline } from './viewer/Timeline';
 
 declare interface LogViewerProps {
     log: LogParserResponse_4dfe1dd
@@ -95,9 +96,9 @@ function LogViewer(props: LogViewerProps) {
 
     return (
         <div>
-            <div className='grid m-4'>
+            <div className='grid m-4 align-items-stretch'>
                 <div className='p-1 col-3'>
-                    <Card title="Log Informations">
+                    <Card className='h-full' title="Log Informations">
                         <dl>
                             <dt className='font-bold'>Log Filename</dt>
                             <dd>{logFile.filename}</dd>
@@ -111,23 +112,25 @@ function LogViewer(props: LogViewerProps) {
                     </Card>
                 </div>
                 <div className='p-1 col-5'>
-                    <Card title={unitCardTitle}>
+                    <Card className='h-full' title={unitCardTitle}>
                         <Tree value={treeEntries} selectionMode="checkbox" selectionKeys={selectedKeys}
                             onSelectionChange={(e) => setSelectedKeys(e.value as TreeCheckboxSelectionKeys)}
                             expandedKeys={expandedKeys} onToggle={(e) => setExpandedKeys(e.value)} />
                     </Card>
                 </div>
                 <div className='p-1 col-4'>
-                    <Card title={codeCardTitle}>
+                    <Card className='h-full' title={codeCardTitle}>
                         <ListBox options={filterableCodes} multiple filter value={selectedCodes} onChange={(e) => setSelectedCodes(e.value)} listStyle={{ height: '300px' }} />
                     </Card>
                 </div>
             </div>
+            <Card title='Chart (fake data)' className='w-auto m-4'>
+                <Timeline logEntries={filteredLogEntries}/>
+            </Card>
             <div className="w-max xl:w-10 m-auto">
                 <DataTable value={filteredLogEntries} removableSort sortField='timestamp' size='large' header={`Showing ${filteredLogEntries.length} log entries`}
                     showGridlines responsiveLayout="scroll" paginator paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" rows={10}>
-                    <Column key="unit_subunit_id" field="unit_subunit_id" hidden />
 
                     <Column key="timestamp" field="timestamp" header="Timestamp" style={{ width: '15%' }} sortable />
                     <Column key="unit" field="unit" header="Unit" style={{ width: '7%' }} sortable />
