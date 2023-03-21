@@ -31,7 +31,7 @@ export function useApi() {
 }
 
 function selectTreeEntry(entry: TreeNode, _selectedEntries: TreeCheckboxSelectionKeys): void {
-    _selectedEntries[entry.key!] = { partialChecked: false, checked: true };
+    _selectedEntries[entry.key!] = { partialChecked: false, checked: true }; // eslint-disable-line @typescript-eslint/no-non-null-assertion
     entry.children?.forEach((child) => selectTreeEntry(child, _selectedEntries));
 }
 
@@ -40,12 +40,12 @@ interface ISetSelectedKeys {
 }
 
 export function selectAllTreeEntries(entries: TreeNode[], setSelectedKeys: ISetSelectedKeys): void {
-    let _selectedEntries: TreeCheckboxSelectionKeys = {};
+    const _selectedEntries: TreeCheckboxSelectionKeys = {};
     entries.forEach((entry) => {
         selectTreeEntry(entry, _selectedEntries)
     });
     setSelectedKeys(_selectedEntries);
-};
+}
 
 export function groupBy<T, K extends string | number | symbol>(elements: T[], indexer: (element: T) => K): Record<K, T[]>{
     return elements.reduce((elems, elem) => {

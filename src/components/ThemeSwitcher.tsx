@@ -27,7 +27,7 @@ function getThemeFromLs(): string {
     return lsTheme;
 }
 
-export const ThemeContext = createContext<ThemeState>(["", ()=>{}]);
+export const ThemeContext = createContext<ThemeState | undefined>(undefined);
 
 function useTheme(): ThemeState {
     const [theme, setTheme] = useState(getThemeFromLs());
@@ -54,7 +54,11 @@ export function ThemeProvider({children}: ThemeProviderProps) {
 }
 
 export function ThemeSwitcher(): JSX.Element {
-    const [theme, setTheme] = useContext(ThemeContext);
+    const themeContext = useContext(ThemeContext);
+    if (themeContext === undefined) {
+        throw new Error("ThemeSwitcher used outside ThemeProvider");
+    }
+    const [theme, setTheme] = themeContext;
     return <div className='flex align-items-center'>
         <i className='pi pi-sun text-2xl' />
         <InputSwitch className='mx-2' checked={theme === 'dark'} onChange={(e) => { setTheme(e.value ? 'dark' : 'light') }} />
