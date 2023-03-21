@@ -1,11 +1,11 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Card } from 'primereact/card';
 import { FileUpload, FileUploadHandlerEvent } from 'primereact/fileupload';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Toast } from 'primereact/toast';
 
-import { DefaultService, LogParserResponse_4dfe1dd, LogParserError_581e5e4, ApiError } from '../openapi';
-import { useApi } from '../utils';
+import { LogParserResponse_4dfe1dd} from '../openapi';
+import { LogParsingError, useLogParsingService } from '../services/LogParsingService';
 
 declare interface LogUploaderProps {
     setLog(log: LogParserResponse_4dfe1dd): void;
@@ -13,48 +13,29 @@ declare interface LogUploaderProps {
 
 function LogUploader(props: LogUploaderProps) {
     const toasts = useRef<Toast>(null);
-    const { dismissError, error, isLoading, handleRequest } = useApi();
+    const logParsingService = useLogParsingService();
+    const [isLoading, setLoading] = useState(false);
+
 
     const logFileUploader = (event: FileUploadHandlerEvent) => {
-        if (event.files.length !== 1) {
+        setLoading(true);
+        logParsingService.parse(event.files).then(props.setLog, (error: LogParsingError) => {
             toasts.current?.show({
                 severity: "error",
                 closable: true,
                 summary: "Error",
-                content: "Select a log file."
+                content: error.message,
             });
-        }
-        handleRequest(DefaultService.postApiAnalyzeLog({ log: event.files[0] })).then((log) => {
-            if (log !== undefined) {
-                props.setLog(log)
-            }
-        });
+        }).finally(() => setLoading(false))
     };
-    if (error !== undefined) {
-        if (error instanceof ApiError) {
-            const parser_error = error.body as LogParserError_581e5e4;
-            toasts.current?.show({
-                severity: "error",
-                closable: true,
-                summary: "Error",
-                content: `${parser_error.errors.join(', ')}`
-            });
-        } else {
-            toasts.current?.show({
-                severity: "error",
-                closable: true,
-                summary: "Error",
-                content: `Errore while uploading log file: ${error.name}: ${error.message}`
-            });
-        }
-    }
+    
     return (
         <div className='grid'>
             <Card className='m-auto col-4' title='Upload a log file'>
-                <Toast ref={toasts} onHide={dismissError} />
+                <Toast ref={toasts} />
                 {isLoading ?
                     <div className='flex justify-content-center'><ProgressSpinner className='m-auto'></ProgressSpinner></div> :
-                    <FileUpload name="log" accept="text/csv" customUpload uploadHandler={logFileUploader} disabled={isLoading} />}
+                    <FileUpload name="log" accept="text/csv" customUpload uploadHandler={logFileUploader} />}
             </Card>
         </div>
     )

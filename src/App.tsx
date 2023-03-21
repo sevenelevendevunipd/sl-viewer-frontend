@@ -13,6 +13,7 @@ import LogUploader from './components/LogUploader';
 import LogViewer from './components/LogViewer';
 import { ThemeSwitcher, ThemeProvider } from './components/ThemeSwitcher';
 import { ReactComponent as Logo } from './logo.svg';
+import LogParsingService from './services/LogParsingService';
 
 function App() {
   const [log, setLog] = useState<LogParserResponse_4dfe1dd | undefined>(undefined);
@@ -23,7 +24,11 @@ function App() {
       <ThemeSwitcher />
     </nav>
     <div className='mt-4'>
-      {log === undefined ? <LogUploader setLog={setLog} /> : <LogViewer log={log} />}
+      {log === undefined ? 
+       <LogParsingService>
+        <LogUploader setLog={setLog}/>
+      </LogParsingService> 
+      : <LogViewer log={log} />}
     </div>
   </ThemeProvider>);
 }
