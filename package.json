@@ -29,6 +29,9 @@
     "webpack": "^5.75.0"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "eslint": "^8.36.0",
     "openapi-typescript-codegen": "^0.23.0",
     "serve": "^14.2.0"
   },
@@ -39,12 +42,6 @@
     "prod-serve": "craco build && serve -s build",
     "apigen-internal": "openapi -i $OPENAPI_SPEC -o src/openapi typegen",
     "apigen": "dotenv-run-script .env .env.defaults -- apigen-internal"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
