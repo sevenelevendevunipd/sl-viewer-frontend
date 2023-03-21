@@ -7,6 +7,6 @@ declare module "*.svg" {
 }
 
 // typing for env vars exported by dotenv-webpack
-declare module ENV {
+declare namespace ENV {
     const URL_BASE: string
 }

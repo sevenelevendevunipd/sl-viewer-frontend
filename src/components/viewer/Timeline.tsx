@@ -161,6 +161,7 @@ const renderGanttItem: CustomSeriesRenderItem = function (params, api) {
     const entryEnd = api.coord([api.value(DIM_END), codeIndex]);
     const barLength = entryEnd[0] - entryStart[0];
     // Get the heigth corresponds to length 1 on y axis.
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const barHeight = (api.size!([0, 1]) as number[])[1] * HEIGHT_RATIO;
     const x = entryStart[0];
     const y = entryStart[1] - barHeight;
@@ -208,8 +209,8 @@ const renderGanttItem: CustomSeriesRenderItem = function (params, api) {
     };
 }
 const renderAxisLabelItem: CustomSeriesRenderItem = function (params, api) {
-    var y = api.coord([0, api.value(0)])[1];
-    if (y < (params.coordSys as any as Rect).y + 5) {
+    const y = api.coord([0, api.value(0)])[1];
+    if (y < (params.coordSys as unknown as Rect).y + 5) {
         return;
     }
     return {
@@ -225,10 +226,11 @@ const renderAxisLabelItem: CustomSeriesRenderItem = function (params, api) {
     };
 }
 function clipRectByRect(params: CustomSeriesRenderItemParams, rect: Rect) {
-    const p = params.coordSys as any as Rect;
+    const p = params.coordSys as unknown as Rect;
     return echarts.graphic.clipRectByRect(rect, p);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function transformEvents(events: LogEntry[]): [TimelineEntry[], string[]] {
     return [[
         [1676661255000, 1676661655000, 0, 1, 1, "In Service Mode"],
@@ -253,6 +255,10 @@ export function Timeline(props: TimelineProps): JSX.Element {
     const [timelineEntries, codes] = useMemo(() => {
         return transformEvents(props.logEntries)
     }, [props.logEntries]);
-    const [theme] = useContext(ThemeContext);
+    const themeContext = useContext(ThemeContext);
+    if (themeContext === undefined) {
+        throw new Error("Timeline is required to be inside a ThemeProvider");
+    }
+    const [theme] = themeContext;
     return <ReactECharts theme={theme} option={makeOption(timelineEntries, codes, theme)} style={{ height: '400px', width: '100%' }} />;
 }

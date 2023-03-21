@@ -30,7 +30,7 @@ function LogViewer(props: LogViewerProps) {
             return {
                 key: unit,
                 label: `Unit ${unit}: ${value.ini_file}`,
-                children: Object.entries(value.subunits!).map(([subUnit, name]) => {
+                children: Object.entries(value.subunits || {}).map(([subUnit, name]) => {
                     return {
                         key: `s${hashUnitSubUnit(parseInt(unit), parseInt(subUnit))}`,
                         label: `Unit ${unit} SubUnit ${subUnit}: ${name}`
