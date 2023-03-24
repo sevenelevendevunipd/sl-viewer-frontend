@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LogParserResponse_4dfe1dd } from './openapi';
+import { LogParserResponse_4dfe1dd_LogFile } from './openapi';
 
 import { Button } from 'primereact/button';
 
@@ -14,9 +14,10 @@ import LogViewer from './components/LogViewer';
 import { ThemeSwitcher, ThemeProvider } from './components/ThemeSwitcher';
 import { ReactComponent as Logo } from './logo.svg';
 import LogParsingService from './services/LogParsingService';
+import LogFilteringService from './services/LogFilteringService';
 
 function App() {
-  const [log, setLog] = useState<LogParserResponse_4dfe1dd | undefined>(undefined);
+  const [log, setLog] = useState<LogParserResponse_4dfe1dd_LogFile | undefined>(undefined);
   return (<ThemeProvider>
     <nav className='w-full flex flex-row justify-content-between surface-ground p-3'>
       <Logo className='h-3rem w-auto' id='logo' />
@@ -27,8 +28,10 @@ function App() {
       {log === undefined ? 
        <LogParsingService>
         <LogUploader setLog={setLog}/>
-      </LogParsingService> 
-      : <LogViewer log={log} />}
+      </LogParsingService> : 
+      <LogFilteringService>
+        <LogViewer log={log} />
+      </LogFilteringService>}
     </div>
   </ThemeProvider>);
 }
