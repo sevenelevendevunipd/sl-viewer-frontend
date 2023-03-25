@@ -31,8 +31,10 @@ export class SubunitFilteringStrategy implements LogFilteringStrategy {
 
     constructor(logFile: LogFile) {
         makeObservable(this, {
+            subunitTree: false,
             selectedSubunits: observable,
             filterSet: computed,
+            filter: false,
             reset: action.bound,
             selectAll: action.bound,
             selectNone: action.bound, 

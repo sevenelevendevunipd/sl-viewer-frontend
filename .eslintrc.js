@@ -1,5 +1,5 @@
 module.exports = {
-    extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react/recommended'],
+    extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react/recommended', 'plugin:mobx/recommended'],
     parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaFeatures: {
@@ -8,10 +8,12 @@ module.exports = {
     },
     plugins: [
         '@typescript-eslint',
+        'mobx',
         'react'
     ],
     rules: {
         "react/react-in-jsx-scope": "off",
+        "mobx/missing-observer": "off",
     },
     root: true,
     settings: {

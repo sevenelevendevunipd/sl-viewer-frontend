@@ -7,21 +7,16 @@ import { useEffect, useState } from 'react';
 
 type ObserverProps = {
     filter: SubunitFilteringStrategy,
-    subunitCardTitle: JSX.Element,
 };
 
-const SubunitFilterObserverUi = observer(({ filter, subunitCardTitle }: ObserverProps) => {
+const SubunitFilterObserverUi = observer(({ filter }: ObserverProps) => {
     const [expandedKeys, setExpandedKeys] = useState<TreeExpandedKeysType>({});
     useEffect(() => {
         setExpandedKeys(Object.fromEntries(filter.subunitTree.map(entry => [entry.key, true])))
     }, [filter.subunitTree])
-    return <div className='p-1 col-5'>
-        <Card className='h-full' title={subunitCardTitle}>
-            <Tree value={filter.subunitTree} selectionMode="checkbox" selectionKeys={filter.selectedSubunits}
-                onSelectionChange={(e) => filter.selectedSubunits = (e.value as TreeCheckboxSelectionKeys)}
-                expandedKeys={expandedKeys} onToggle={(e) => setExpandedKeys(e.value)} />
-        </Card>
-    </div>
+    return <Tree value={filter.subunitTree} selectionMode="checkbox" selectionKeys={filter.selectedSubunits}
+        onSelectionChange={(e) => filter.selectedSubunits = (e.value as TreeCheckboxSelectionKeys)}
+        expandedKeys={expandedKeys} onToggle={(e) => setExpandedKeys(e.value)} />
 });
 
 export const SubunitFilterUi = (filter: SubunitFilteringStrategy) => {
@@ -32,5 +27,9 @@ export const SubunitFilterUi = (filter: SubunitFilteringStrategy) => {
             <Button className='mx-4' label="Select None" onClick={filter.selectNone} />
         </div>
     </div>)
-    return <SubunitFilterObserverUi filter={filter} subunitCardTitle={subunitCardTitle} />;
+    return <div className='p-1 col-5'>
+        <Card className='h-full' title={subunitCardTitle}>
+            <SubunitFilterObserverUi filter={filter}/>
+        </Card>
+    </div>;
 }

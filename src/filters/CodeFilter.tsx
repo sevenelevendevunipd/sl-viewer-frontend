@@ -11,11 +11,14 @@ export class CodeFilteringStrategy implements LogFilteringStrategy {
 
     constructor(logFile: LogFile) {
         makeObservable(this, {
+            filterableCodes: false,
             selectedCodes: observable,
             filterSet: computed,
+            filter: false,
             reset: action.bound,
             selectAll: action.bound,
             selectNone: action.bound,
+            setSelection: action,
         })
         this.filterableCodes = [...new Set(logFile.log_entries.map(entry => entry.code))].sort()
         this.reset();

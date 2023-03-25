@@ -6,14 +6,11 @@ import { CodeFilteringStrategy } from '../../filters/CodeFilter';
 
 type ObserverProps = {
     filter: CodeFilteringStrategy,
-    codeCardTitle: JSX.Element,
 };
 
-const CodeFilterObserverUi = observer(({filter, codeCardTitle}: ObserverProps) => <div className='p-1 col-4'>
-<Card className='h-full' title={codeCardTitle}>
+const CodeFilterObserverUi = observer(({ filter }: ObserverProps) =>
     <ListBox options={filter.filterableCodes} multiple filter value={filter.selectedCodes} onChange={(e) => filter.selectedCodes = e.value} listStyle={{ height: '300px' }} />
-</Card>
-</div>);
+);
 
 export const CodeFilterUi = (filter: CodeFilteringStrategy) => {
     const codeCardTitle = (<div className='flex align-items-center justify-content-between'>
@@ -23,5 +20,9 @@ export const CodeFilterUi = (filter: CodeFilteringStrategy) => {
             <Button className='mx-4' label="Select None" onClick={filter.selectNone} />
         </div>
     </div>)
-    return <CodeFilterObserverUi filter={filter} codeCardTitle={codeCardTitle}/>;
+    return <div className='p-1 col-4'>
+        <Card className='h-full' title={codeCardTitle}>
+            <CodeFilterObserverUi filter={filter} />
+        </Card>
+    </div>;
 }

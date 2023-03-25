@@ -6228,6 +6228,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-mobx@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "eslint-plugin-mobx@npm:0.0.9"
+  peerDependencies:
+    eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+  checksum: 6ccbce066f3ca34799ce32fcf885b9f163712c684ed3b4dfbfe7c690ede03a76b25fd598d6a4e9885cc9b08d4ca722a469bd4f1da2ef00def1c00be6378425a5
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-react-hooks@npm:^4.3.0":
   version: 4.6.0
   resolution: "eslint-plugin-react-hooks@npm:4.6.0"
@@ -12253,6 +12262,7 @@ __metadata:
     echarts: ^5.4.1
     echarts-for-react: ^3.0.2
     eslint: ^8.36.0
+    eslint-plugin-mobx: ^0.0.9
     mobx: ^6.8.0
     mobx-react-lite: ^3.4.3
     openapi-typescript: ^6.1.0

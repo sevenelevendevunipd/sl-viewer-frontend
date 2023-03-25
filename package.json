@@ -34,6 +34,7 @@
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
     "eslint": "^8.36.0",
+    "eslint-plugin-mobx": "^0.0.9",
     "openapi-typescript-codegen": "^0.23.0",
     "serve": "^14.2.0"
   },
