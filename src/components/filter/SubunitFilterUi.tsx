@@ -27,7 +27,7 @@ export const SubunitFilterUi = (filter: SubunitFilteringStrategy) => {
             <Button className='mx-4' label="Select None" onClick={filter.selectNone} />
         </div>
     </div>)
-    return <div className='p-1 col-5'>
+    return <div className='p-1 col-5' key="subunit-filter">
         <Card className='h-full' title={subunitCardTitle}>
             <SubunitFilterObserverUi filter={filter}/>
         </Card>

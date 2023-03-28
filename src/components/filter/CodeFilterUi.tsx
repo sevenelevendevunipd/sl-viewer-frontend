@@ -20,7 +20,7 @@ export const CodeFilterUi = (filter: CodeFilteringStrategy) => {
             <Button className='mx-4' label="Select None" onClick={filter.selectNone} />
         </div>
     </div>)
-    return <div className='p-1 col-4'>
+    return <div className='p-1 col-4' key="code-filter">
         <Card className='h-full' title={codeCardTitle}>
             <CodeFilterObserverUi filter={filter} />
         </Card>
