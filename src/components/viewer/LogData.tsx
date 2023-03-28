@@ -7,16 +7,16 @@ import { Timeline } from "./Timeline";
 type ObserverProps = {
     filteringService: ILogFilteringService
 };
-export const LogDataObserver = observer(({ filteringService }: ObserverProps) => <>
-    <Card title='Chart (fake data)' className='w-auto m-4'>
-        <Timeline logEntries={(filteringService.filteredEntries)} />
-    </Card>
-    <div className="w-max xl:w-10 m-auto">
-        <LogTable/>
-    </div>
-</>);
+export const LogDataObserver = observer(({ filteringService }: ObserverProps) => <Timeline logEntries={(filteringService.filteredEntries)} />);
 
 export const LogData = () => {
     const filteringService = useLogFilteringService();
-    return <LogDataObserver filteringService={filteringService}/>;
+    return <>
+        <Card title='Chart (fake data)' className='w-auto m-4'>
+            <LogDataObserver filteringService={filteringService} />
+        </Card>
+        <div className="w-max xl:w-10 m-auto">
+            <LogTable />
+        </div>
+    </>;
 }
