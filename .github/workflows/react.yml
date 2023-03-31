@@ -1,0 +1,42 @@
+name: sl-viewer-frontend-react
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+jobs:
+  test:
+    name: "Run unit tests with coverage"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Setup environment
+        run: |
+          npm install -g yarn
+      - name: Run tests and report coverage 
+        uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          package-manager: yarn
+          test-script: yarn test
+  check_style:
+    name: "Check coding style and formatting"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+      - name: Setup environment
+        run: |
+          npm install -g yarn
+          yarn install
+      - name: Run Prettier formatter
+        run: yarn prettier --check .
+      - name: Run Eslint
+        run: yarn eslint --max-warnings 0 src
+        if: ${{ success() || (failure() && steps.setup.conclusion == 'success') }}
