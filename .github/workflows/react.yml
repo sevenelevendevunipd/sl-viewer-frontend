@@ -19,9 +19,15 @@ jobs:
           npm install -g yarn
       - name: Run tests and report coverage 
         uses: ArtiomTr/jest-coverage-report-action@v2
+        if: github.event_name == 'pull_request'
         with:
           package-manager: yarn
           test-script: yarn test
+      - name: Run tests
+        if: github.event_name != 'pull_request'
+        run: |
+          yarn install
+          yarn test
   check_style:
     name: "Check coding style and formatting"
     runs-on: ubuntu-latest
