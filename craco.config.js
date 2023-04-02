@@ -21,5 +21,8 @@ module.exports = {
                 implementation: require('sass'),
             },
         },
-    }
+    },
+    eslint: {
+        enable: false,
+    },
 };

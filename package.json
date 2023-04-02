@@ -36,6 +36,7 @@
     "eslint": "^8.36.0",
     "eslint-plugin-mobx": "^0.0.9",
     "openapi-typescript-codegen": "^0.23.0",
+    "prettier": "^2.8.7",
     "serve": "^14.2.0"
   },
   "scripts": {
@@ -56,6 +57,11 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(echarts|primereact/resources/primereact.css|primeicons|primeflex|zrender))"
     ]
   },
   "packageManager": "yarn@3.4.1"
