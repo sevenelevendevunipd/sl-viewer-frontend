@@ -4,11 +4,11 @@ import { FileUpload, FileUploadHandlerEvent } from 'primereact/fileupload';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Toast } from 'primereact/toast';
 
-import { LogParserResponse_4dfe1dd} from '../openapi';
+import { LogParserResponse_4dfe1dd_LogFile} from '../openapi';
 import { LogParsingError, useLogParsingService } from '../services/LogParsingService';
 
 declare interface LogUploaderProps {
-    setLog(log: LogParserResponse_4dfe1dd): void;
+    setLog(log: LogParserResponse_4dfe1dd_LogFile): void;
 }
 
 function LogUploader(props: LogUploaderProps) {
@@ -19,7 +19,7 @@ function LogUploader(props: LogUploaderProps) {
 
     const logFileUploader = (event: FileUploadHandlerEvent) => {
         setLoading(true);
-        logParsingService.parse(event.files).then(props.setLog, (error: LogParsingError) => {
+        logParsingService.parse(event.files).then(resp => props.setLog(resp.log), (error: LogParsingError) => {
             toasts.current?.show({
                 severity: "error",
                 closable: true,

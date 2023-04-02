@@ -6228,6 +6228,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-mobx@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "eslint-plugin-mobx@npm:0.0.9"
+  peerDependencies:
+    eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+  checksum: 6ccbce066f3ca34799ce32fcf885b9f163712c684ed3b4dfbfe7c690ede03a76b25fd598d6a4e9885cc9b08d4ca722a469bd4f1da2ef00def1c00be6378425a5
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-react-hooks@npm:^4.3.0":
   version: 4.6.0
   resolution: "eslint-plugin-react-hooks@npm:4.6.0"
@@ -9497,6 +9506,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mobx-react-lite@npm:^3.4.3":
+  version: 3.4.3
+  resolution: "mobx-react-lite@npm:3.4.3"
+  peerDependencies:
+    mobx: ^6.1.0
+    react: ^16.8.0 || ^17 || ^18
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 60a2580eb9a0b9988fc76959d7299f018733dc33cacaa73c45500953006d4d45e738d9ae39ccfc767ac19a75656dbc028d833282c848fbc67d8d18a2bcb5c262
+  languageName: node
+  linkType: hard
+
+"mobx@npm:^6.8.0":
+  version: 6.8.0
+  resolution: "mobx@npm:6.8.0"
+  checksum: f09bb079292ea59023a7e35a9c73ed577e3de9a0175ec3d5a2adc8192e2e3a352b29ec0981ee06d1d63f701f81bb7fc6cc19fd9089edf84a754a8a75ef00ef7f
+  languageName: node
+  linkType: hard
+
 "ms@npm:2.0.0":
   version: 2.0.0
   resolution: "ms@npm:2.0.0"
@@ -12231,6 +12262,9 @@ __metadata:
     echarts: ^5.4.1
     echarts-for-react: ^3.0.2
     eslint: ^8.36.0
+    eslint-plugin-mobx: ^0.0.9
+    mobx: ^6.8.0
+    mobx-react-lite: ^3.4.3
     openapi-typescript: ^6.1.0
     openapi-typescript-codegen: ^0.23.0
     primeflex: ^3.3.0

@@ -1,0 +1,25 @@
+@startuml
+interface LogFilteringStrategy {
+    +filter(entries: LogParserResponse_4dfe1dd_LogEntry[]): LogParserResponse_4dfe1dd_LogEntry[]
+    +reset(): void
+}
+interface ILogFilteringService {
+    +register(filter: LogFilteringStrategy, ui: JSX.Element): void
+    +filteredEntries: LogParserResponse_4dfe1dd_LogEntry[]
+    +resetAll(): void
+    +setLogFile(logFile: LogParserResponse_4dfe1dd_LogFile): void
+    +removeFilters(): void
+    +filtersUi: JSX.Element
+}
+class ConcreteLogFilteringService implements ILogFilteringService {
+    +registeredFilters: LogFilteringStrategy[]
+    +filterUIs: JSX.Element[]
+    +logFile: LogParserResponse_4dfe1dd_LogFile | null
+    +register(filter: LogFilteringStrategy, ui: JSX.Element): void
+    +filteredEntries: LogParserResponse_4dfe1dd_LogEntry[]
+    +setLogFile(logFile: LogParserResponse_4dfe1dd_LogFile): void
+    +removeFilters(): void
+    +resetAll(): void
+    +filtersUi: JSX.Element
+}
+@enduml

@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, PropsWithChildren } from "react";
 import { ApiError, DefaultService, LogParserError_581e5e4, LogParserResponse_4dfe1dd } from "../openapi";
 
 export class LogParsingError extends Error {
@@ -17,11 +17,7 @@ export interface ILogParsingService {
 
 const LogParsingServiceContext = createContext<ILogParsingService | undefined>(undefined);
 
-interface WithChildrenProps {
-    children: JSX.Element[] | JSX.Element
-}
-
-const LogParsingService = (props: WithChildrenProps) => {
+const LogParsingService = (props: PropsWithChildren) => {
     const logParsingService = {
         async parse(files: File[]): Promise<LogParserResponse> {
             if (files.length !== 1) {
