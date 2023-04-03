@@ -323,11 +323,11 @@ function transformEvents(events: LogEntry[]): [TimelineEntry[], string[]] {
           [end, start] // end and start are reversed because log is sorted by most recent timestamp first
         ) => {
           if (end.value != "OFF") {
-            console.warn("invalid data: ", end)
+            console.warn("invalid data: ", end);
           }
           if (start.value != "ON") {
-            console.warn("invalid data: ", start)
-          } 
+            console.warn("invalid data: ", start);
+          }
           return [
             new Date(start.timestamp).getTime(),
             new Date(end.timestamp).getTime(),
@@ -335,7 +335,8 @@ function transformEvents(events: LogEntry[]): [TimelineEntry[], string[]] {
             start.unit,
             start.subunit,
             start.description,
-          ] as TimelineEntry}
+          ] as TimelineEntry;
+        }
       )
     );
   });
