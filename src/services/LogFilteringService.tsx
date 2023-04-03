@@ -100,9 +100,13 @@ type ObserverProps = {
   filteringService: ILogFilteringService;
 };
 
-const FilterUiObserver = observer(
-  ({ filteringService }: ObserverProps) => <>{filteringService.filtersUi.map(f => <>{f}</>)}</>
-);
+const FilterUiObserver = observer(({ filteringService }: ObserverProps) => (
+  <>
+    {filteringService.filtersUi.map((f) => (
+      <>{f}</>
+    ))}
+  </>
+));
 
 export const FilterUi = () => {
   const filteringService = useLogFilteringService();
