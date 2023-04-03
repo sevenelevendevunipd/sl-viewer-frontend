@@ -8,6 +8,7 @@ import {
 import { LogParserResponse_4dfe1dd_LogEntry } from "../../openapi";
 import { ThemeContext } from "../ThemeSwitcher";
 import { useMemo, useContext } from "react";
+import { chunk, groupBy } from "../../utils";
 
 type ECOption = echarts.ComposeOption<CustomSeriesOption>;
 type LogEntry = LogParserResponse_4dfe1dd_LogEntry;
@@ -32,6 +33,8 @@ const DIM_START = 0,
   DIM_UNIT = 3,
   DIM_SUBUNIT = 4,
   DIM_DESCRIPTION = 5;
+
+const EXCLUDED_CODES = new Set(["SDI Fault Cause"]);
 
 function makeOption(
   events: TimelineEntry[],
@@ -62,7 +65,7 @@ function makeOption(
         filterMode: "weakFilter",
         start: 0,
         end: 100,
-        zoomOnMouseWheel: false,
+        zoomOnMouseWheel: true,
         moveOnMouseMove: true,
       },
       {
@@ -74,7 +77,7 @@ function makeOption(
         top: 70,
         bottom: 20,
         start: 0,
-        end: 100,
+        end: Math.min(7 / codes.length, 1) * 100,
         handleSize: 0,
         showDetail: false,
       },
@@ -83,10 +86,10 @@ function makeOption(
         id: "insideY",
         yAxisIndex: 0,
         start: 0,
-        end: 100,
+        end: Math.min(7 / codes.length, 1) * 100,
         zoomOnMouseWheel: false,
         moveOnMouseMove: true,
-        moveOnMouseWheel: true,
+        moveOnMouseWheel: false,
       },
     ],
     grid: {
@@ -243,22 +246,103 @@ function clipRectByRect(params: CustomSeriesRenderItemParams, rect: Rect) {
   return echarts.graphic.clipRectByRect(rect, p);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function transformEvents(events: LogEntry[]): [TimelineEntry[], string[]] {
-  return [
-    [
-      [1676661255000, 1676661655000, 0, 1, 1, "In Service Mode"],
-      [1676661355000, 1676661755000, 1, 1, 2, "In Service Mode"],
-      [1676661455000, 1676661855000, 2, 1, 1, "Reset History Log"],
-      [1676661555000, 1676661955000, 3, 1, 2, "Reset History Log"],
-      [1676662055000, 1676662455000, 3, 1, 2, "Reset History Log"],
-      [1676662155000, 1676662555000, 2, 1, 1, "Reset History Log"],
-      [1676662255000, 1676662655000, 1, 1, 2, "In Service Mode"],
-      [1676662355000, 1676662755000, 0, 1, 1, "In Service Mode"],
-      [1676661655000, 1676662355000, 4, 1, 1, "lolololololololol"],
-    ],
-    ["1,1 S009", "1,2 S009", "1,1 CCX04", "1,2 CCX04", "1,3 niiice"],
-  ];
+  /* REMEMBER THAT events IS SORTED IN REVERSE CHRONO ORDER */
+  if (events.length == 0) {
+    return [[], []];
+  }
+  const minTimestamp = events[events.length - 1].timestamp;
+  const maxTimestamp = events[0].timestamp;
+  const groupedEntries = groupBy(
+    events.filter((e) => e.type_um == "BIN" && !EXCLUDED_CODES.has(e.code)),
+    (e) => {
+      return `${e.unit},${e.subunit} ${e.code}` as string;
+    }
+  );
+  const timelineEntries = [] as TimelineEntry[];
+  Object.values(groupedEntries).forEach((entries, codeIndex) => {
+    // if last entry in log is ON add a fake OFF entry at maxTimestamp
+    if (entries[0].value == "ON") {
+      const toBeCloned = entries[0];
+      entries.unshift({
+        timestamp: maxTimestamp,
+        unit: toBeCloned.unit,
+        subunit: toBeCloned.subunit,
+        unit_subunit_id: toBeCloned.unit_subunit_id,
+        ini_filename: toBeCloned.ini_filename,
+        code: toBeCloned.code,
+        description: toBeCloned.description,
+        value: "OFF",
+        type_um: toBeCloned.type_um,
+        snapshot: toBeCloned.snapshot,
+        color: toBeCloned.color,
+      });
+    }
+    // if first entry in log is OFF add a fake ON entry at minTimestamp
+    if (entries[entries.length - 1].value == "OFF") {
+      const toBeCloned = entries[entries.length - 1];
+      entries.push({
+        timestamp: minTimestamp,
+        unit: toBeCloned.unit,
+        subunit: toBeCloned.subunit,
+        unit_subunit_id: toBeCloned.unit_subunit_id,
+        ini_filename: toBeCloned.ini_filename,
+        code: toBeCloned.code,
+        description: toBeCloned.description,
+        value: "ON",
+        type_um: toBeCloned.type_um,
+        snapshot: toBeCloned.snapshot,
+        color: toBeCloned.color,
+      });
+    }
+    const filteredEntries = entries
+      .filter((entry, index, e) => {
+        // only keep first (last time-wise) OFF if there are consecutive dupes
+        return (
+          index == 0 || entry.value == "ON" || e[index - 1].value != entry.value
+        );
+      })
+      .filter((entry, index, e) => {
+        // only keep last (first time-wise) ON if there are consecutive dupes
+        return (
+          index == e.length - 1 ||
+          entry.value == "OFF" ||
+          e[index + 1].value != entry.value
+        );
+      });
+
+    if (filteredEntries.length % 2 != 0) {
+      console.error("something is terribly broken", {
+        entries,
+        filteredEntries,
+      });
+      return;
+    }
+
+    timelineEntries.push(
+      ...chunk(filteredEntries, 2).map(
+        (
+          [end, start] // end and start are reversed because log is sorted by most recent timestamp first
+        ) => {
+          if (end.value != "OFF") {
+            console.warn("invalid data: ", end);
+          }
+          if (start.value != "ON") {
+            console.warn("invalid data: ", start);
+          }
+          return [
+            new Date(start.timestamp).getTime(),
+            new Date(end.timestamp).getTime(),
+            codeIndex,
+            start.unit,
+            start.subunit,
+            start.description,
+          ] as TimelineEntry;
+        }
+      )
+    );
+  });
+  return [timelineEntries, Object.keys(groupedEntries)];
 }
 
 export function Timeline(props: TimelineProps): JSX.Element {

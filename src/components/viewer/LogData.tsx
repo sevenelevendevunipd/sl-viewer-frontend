@@ -20,7 +20,7 @@ export const LogData = () => {
   const filteringService = useLogFilteringService();
   return (
     <>
-      <Card title="Chart (fake data)" className="w-auto m-4">
+      <Card title="Log timeline" className="w-auto m-4">
         <LogDataObserver filteringService={filteringService} />
       </Card>
       <div className="w-max xl:w-10 m-auto">

@@ -8,3 +8,13 @@ export function groupBy<T, K extends string | number | symbol>(
     return elems;
   }, {} as Record<K, T[]>);
 }
+
+export function chunk<T>(elements: T[], chunkSize: number): T[][] {
+  return elements.reduce(
+    (accumulator, _, idx) =>
+      idx % chunkSize !== 0
+        ? accumulator
+        : [...accumulator, elements.slice(idx, idx + chunkSize)],
+    [] as T[][]
+  );
+}
