@@ -34,8 +34,6 @@ function LogViewer(props: LogViewerProps) {
     const subunitFilter = new SubunitFilteringStrategy(logFile);
     filteringService.register(subunitFilter, SubunitFilterUi(subunitFilter));
 
-
-
     return filteringService.removeFilters;
   }, [logFile]);
 
