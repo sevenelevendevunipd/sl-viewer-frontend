@@ -7,6 +7,8 @@ import {
 } from "../services/LogFilteringService";
 import { CodeFilteringStrategy } from "../filters/CodeFilter";
 import { CodeFilterUi } from "./filter/CodeFilterUi";
+import { FirmwareFilteringStrategy } from "../filters/FirmwareFilter";
+import { FirmwareFilterUi } from "./filter/FirmwareFilterUi";
 import { SubunitFilteringStrategy } from "../filters/SubunitFilter";
 import { SubunitFilterUi } from "./filter/SubunitFilterUi";
 import LogInfo from "./viewer/LogInfo";
@@ -25,6 +27,9 @@ function LogViewer(props: LogViewerProps) {
 
     const codeFilter = new CodeFilteringStrategy(logFile);
     filteringService.register(codeFilter, CodeFilterUi(codeFilter));
+
+    const FirmwareFilter = new FirmwareFilteringStrategy(logFile);
+    filteringService.register(FirmwareFilter, FirmwareFilterUi(FirmwareFilter));
 
     const subunitFilter = new SubunitFilteringStrategy(logFile);
     filteringService.register(subunitFilter, SubunitFilterUi(subunitFilter));
