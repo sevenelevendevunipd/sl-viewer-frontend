@@ -49,7 +49,7 @@ const LogTableObserver = observer(({ filteringService }: ObserverProps) => (
       <Column
         key="ini_filename"
         field="ini_filename"
-        header="Device"
+        header="Firmware"
         style={{ width: "18%" }}
         sortable
       />
