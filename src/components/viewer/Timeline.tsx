@@ -321,15 +321,21 @@ function transformEvents(events: LogEntry[]): [TimelineEntry[], string[]] {
       ...chunk(filteredEntries, 2).map(
         (
           [end, start] // end and start are reversed because log is sorted by most recent timestamp first
-        ) =>
-          [
+        ) => {
+          if (end.value != "OFF") {
+            console.warn("invalid data: ", end)
+          }
+          if (start.value != "ON") {
+            console.warn("invalid data: ", start)
+          } 
+          return [
             new Date(start.timestamp).getTime(),
             new Date(end.timestamp).getTime(),
             codeIndex,
             start.unit,
             start.subunit,
             start.description,
-          ] as TimelineEntry
+          ] as TimelineEntry}
       )
     );
   });
