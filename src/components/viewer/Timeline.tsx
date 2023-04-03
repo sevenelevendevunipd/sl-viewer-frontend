@@ -34,6 +34,8 @@ const DIM_START = 0,
   DIM_SUBUNIT = 4,
   DIM_DESCRIPTION = 5;
 
+const EXCLUDED_CODES = new Set(["SDI Fault Cause"]);
+
 function makeOption(
   events: TimelineEntry[],
   codes: string[],
@@ -252,7 +254,7 @@ function transformEvents(events: LogEntry[]): [TimelineEntry[], string[]] {
   const minTimestamp = events[events.length - 1].timestamp;
   const maxTimestamp = events[0].timestamp;
   const groupedEntries = groupBy(
-    events.filter((e) => e.type_um == "BIN"),
+    events.filter((e) => e.type_um == "BIN" && !EXCLUDED_CODES.has(e.code)),
     (e) => {
       return `${e.unit},${e.subunit} ${e.code}` as string;
     }
