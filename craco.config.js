@@ -25,4 +25,7 @@ module.exports = {
     eslint: {
         enable: false,
     },
+    babel: {
+        plugins: [['@babel/plugin-proposal-decorators', { legacy: true }]],
+    },
 };

@@ -20,7 +20,7 @@ export interface ILogFilteringService {
   resetAll(): void;
   setLogFile(logFile: LogFile): void;
   removeFilters(): void;
-  get filtersUi(): JSX.Element;
+  get filtersUi(): JSX.Element[];
 }
 
 class ConcreteLogFilteringService implements ILogFilteringService {
@@ -68,7 +68,7 @@ class ConcreteLogFilteringService implements ILogFilteringService {
   }
 
   get filtersUi() {
-    return <>{this.filterUIs}</>;
+    return this.filterUIs;
   }
 }
 
@@ -100,9 +100,13 @@ type ObserverProps = {
   filteringService: ILogFilteringService;
 };
 
-const FilterUiObserver = observer(
-  ({ filteringService }: ObserverProps) => filteringService.filtersUi
-);
+const FilterUiObserver = observer(({ filteringService }: ObserverProps) => (
+  <>
+    {filteringService.filtersUi.map((f) => (
+      <>{f}</>
+    ))}
+  </>
+));
 
 export const FilterUi = () => {
   const filteringService = useLogFilteringService();
