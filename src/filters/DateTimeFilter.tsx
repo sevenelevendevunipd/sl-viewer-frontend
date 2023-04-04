@@ -28,22 +28,28 @@ export class DateTimeFilteringStrategy implements LogFilteringStrategy {
     ].sort();
     this.reset();
   }
+
   get filterSet() {
     return new Set(this.selectedDateTimes);
   }
+
   filter(entries: LogEntry[]) {
-    const codeSet = this.filterSet;
-    return entries.filter((e) => codeSet.has(e.timestamp));
+    const dateTimeSet = this.filterSet;
+    return entries.filter((e) => dateTimeSet.has(e.timestamp));
   }
+
   reset() {
     return this.selectAll();
   }
+
   selectAll() {
     this.selectedDateTimes = [...this.filterableDateTimes];
   }
+
   selectNone() {
     this.selectedDateTimes = [];
   }
+
   setSelection(selection: string[]) {
     this.selectedDateTimes = selection;
   }
