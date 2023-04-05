@@ -20,9 +20,9 @@ export function chunk<T>(elements: T[], chunkSize: number): T[][] {
 }
 
 export function min<T>(a: T, b: T): T {
-  return a < b ? a : b;
+  return a <= b ? a : b;
 }
 
 export function max<T>(a: T, b: T): T{
-  return a > b ? a : b;
+  return a >= b ? a : b;
 }
