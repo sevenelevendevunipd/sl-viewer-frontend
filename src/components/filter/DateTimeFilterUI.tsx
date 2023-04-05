@@ -1,5 +1,4 @@
 import {Card} from "primereact/card";
-import {Button} from "primereact/button";
 import {observer} from "mobx-react-lite";
 import {Calendar} from "primereact/calendar";
 import {DateTimeFilteringStrategy} from "../../filters/DateTimeFilter";
@@ -9,46 +8,40 @@ type ObserverProps = {
 };
 
 const DateTimeFilterObserverUi = observer(({filter}: ObserverProps) => (
-  <Calendar
-    //TODO: si aggiorna subito impedendo selezione multipla (range):
-    value={[new Date(filter.selectedDateTimes[0]),
-      new Date(filter.selectedDateTimes[filter.selectedDateTimes.length - 1])]}
+  <><Calendar style={{width: "100%"}}
+    value={filter.minSelectedTimestamp}
     onChange={(e) => {
-      const date = e.value as Date[];
-      filter.selectNone();
-      //TODO: 90% sbagliato, trovare modo migliore
-      date.forEach((e) => filter.selectedDateTimes.push(e.toISOString()));
+      filter.minSelectedTimestamp= e.value as Date;
     }}
-    minDate={new Date(filter.filterableDateTimes[0])}
-    maxDate={new Date(filter.filterableDateTimes[filter.filterableDateTimes.length - 1])}
+    minDate={filter.minTimestamp}
+    maxDate={new Date(Math.min(filter.maxTimestamp.getTime(), filter.maxSelectedTimestamp.getTime()))}
     showIcon
-    selectionMode="range"
-    /*TODO: fix time and add these options
     showTime
     showSeconds
     showMillisec
     hourFormat="24"
-    */
-    //readOnlyInput
+    readOnlyInput
   />
+<Calendar style={{width: "100%"}}
+  value={filter.maxSelectedTimestamp}
+  onChange={(e) => {
+    filter.maxSelectedTimestamp= e.value as Date;
+  }}
+  minDate={new Date(Math.max(filter.minTimestamp.getTime(), filter.minSelectedTimestamp.getTime()))}
+  maxDate={filter.maxTimestamp}
+  showIcon
+  showTime
+  showSeconds
+  showMillisec
+  hourFormat="24"
+  readOnlyInput
+/></>
 ));
 
 export const DateTimeFilterUi = (filter: DateTimeFilteringStrategy) => {
   const dateTimeCardTitle = (
     <div className="flex align-items-center justify-content-between">
       Filter by Date and Time
-      <div>
-        <Button
-          className="mx-4"
-          label="Select All"
-          onClick={filter.selectAll}
-        />
-        <Button
-          className="mx-4"
-          label="Select None"
-          onClick={filter.selectNone}
-        />
-      </div>
     </div>
   );
   return (
