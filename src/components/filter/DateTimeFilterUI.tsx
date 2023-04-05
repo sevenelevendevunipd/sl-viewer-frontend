@@ -10,10 +10,9 @@ type ObserverProps = {
 
 const DateTimeFilterObserverUi = observer(({filter}: ObserverProps) => (
   <><Calendar style={{width: "100%"}}
+    key="minCalendar"
     value={filter.minSelectedTimestamp}
-    onChange={(e) => {
-      filter.minSelectedTimestamp= e.value as Date;
-    }}
+    onChange={(e) => filter.setSelected(e.value as Date, filter.maxSelectedTimestamp)}
     minDate={filter.minTimestamp}
     maxDate={min(filter.maxTimestamp, filter.maxSelectedTimestamp)}
     showIcon
@@ -25,9 +24,7 @@ const DateTimeFilterObserverUi = observer(({filter}: ObserverProps) => (
   />
 <Calendar style={{width: "100%"}}
   value={filter.maxSelectedTimestamp}
-  onChange={(e) => {
-    filter.maxSelectedTimestamp= e.value as Date;
-  }}
+  onChange={(e) => filter.setSelected(filter.minSelectedTimestamp, e.value as Date)}
   minDate={max(filter.minTimestamp, filter.minSelectedTimestamp)}
   maxDate={filter.maxTimestamp}
   showIcon
