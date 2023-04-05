@@ -2,6 +2,7 @@ import {Card} from "primereact/card";
 import {observer} from "mobx-react-lite";
 import {Calendar} from "primereact/calendar";
 import {DateTimeFilteringStrategy} from "../../filters/DateTimeFilter";
+import { min, max } from "../../utils";
 
 type ObserverProps = {
   filter: DateTimeFilteringStrategy;
@@ -14,7 +15,7 @@ const DateTimeFilterObserverUi = observer(({filter}: ObserverProps) => (
       filter.minSelectedTimestamp= e.value as Date;
     }}
     minDate={filter.minTimestamp}
-    maxDate={new Date(Math.min(filter.maxTimestamp.getTime(), filter.maxSelectedTimestamp.getTime()))}
+    maxDate={min(filter.maxTimestamp, filter.maxSelectedTimestamp)}
     showIcon
     showTime
     showSeconds
@@ -27,7 +28,7 @@ const DateTimeFilterObserverUi = observer(({filter}: ObserverProps) => (
   onChange={(e) => {
     filter.maxSelectedTimestamp= e.value as Date;
   }}
-  minDate={new Date(Math.max(filter.minTimestamp.getTime(), filter.minSelectedTimestamp.getTime()))}
+  minDate={max(filter.minTimestamp, filter.minSelectedTimestamp)}
   maxDate={filter.maxTimestamp}
   showIcon
   showTime
