@@ -30,11 +30,11 @@ function LogViewer(props: LogViewerProps) {
     const datetimeFilter = new DateTimeFilteringStrategy(logFile);
     filteringService.register(datetimeFilter, DateTimeFilterUi(datetimeFilter));
 
-    const codeFilter = new CodeFilteringStrategy(logFile);
-    filteringService.register(codeFilter, CodeFilterUi(codeFilter));
-
     const FirmwareFilter = new FirmwareFilteringStrategy(logFile);
     filteringService.register(FirmwareFilter, FirmwareFilterUi(FirmwareFilter));
+
+    const codeFilter = new CodeFilteringStrategy(logFile);
+    filteringService.register(codeFilter, CodeFilterUi(codeFilter));
 
     const subunitFilter = new SubunitFilteringStrategy(logFile);
     filteringService.register(subunitFilter, SubunitFilterUi(subunitFilter));
