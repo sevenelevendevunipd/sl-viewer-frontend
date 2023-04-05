@@ -22,12 +22,13 @@ export class DateTimeFilteringStrategy implements LogFilteringStrategy {
       minSelectedTimestamp: observable,
       maxSelectedTimestamp: observable,
       filter: false,
+      setSelected: action.bound,
       reset: action.bound,
     });
     this.minTimestamp= new Date(logFile.log_entries[logFile.log_entries.length-1].timestamp);
     this.maxTimestamp= new Date(logFile.log_entries[0].timestamp);
-    this.minSelectedTimestamp= this.minTimestamp;
-    this.maxSelectedTimestamp= this.maxTimestamp;
+    this.minSelectedTimestamp= structuredClone(this.minTimestamp);
+    this.maxSelectedTimestamp= structuredClone(this.maxTimestamp);
   }
 
   filter(entries: LogEntry[]) {
@@ -36,7 +37,7 @@ export class DateTimeFilteringStrategy implements LogFilteringStrategy {
       return timestamp >= this.minSelectedTimestamp && timestamp <= this.maxSelectedTimestamp;
     });*/
     //funzione più efficiente
-    let i;
+    /*let i;
     for(i=0; i<entries.length; i++) {
       const timestamp = new Date(entries[i].timestamp);
       if(timestamp <= this.maxSelectedTimestamp) {
@@ -52,11 +53,20 @@ export class DateTimeFilteringStrategy implements LogFilteringStrategy {
     }
     console.log(i, j);
     console.log(entries[i].timestamp, entries[j-1].timestamp);
-    return entries.slice(i, j);
+    return entries.slice(i, j);*/
+
+    const start = entries.findIndex(e => new Date(e.timestamp) <= this.maxSelectedTimestamp)
+    const end = entries.findLastIndex(e => new Date(e.timestamp) >= this.minSelectedTimestamp)
+    return entries.slice(start, end)
+  }
+
+  setSelected(min: Date, max: Date) {
+    this.minSelectedTimestamp = structuredClone(min)
+    this.maxSelectedTimestamp = structuredClone(max)
   }
 
   reset() {
-    this.minSelectedTimestamp= this.minTimestamp;
-    this.maxSelectedTimestamp= this.maxTimestamp;
+    this.minSelectedTimestamp= structuredClone(this.minTimestamp);
+    this.maxSelectedTimestamp= structuredClone(this.maxTimestamp);
   }
 }
