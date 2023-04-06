@@ -12,5 +12,7 @@ export type { LogParserResponse_4dfe1dd_LogEntry } from './models/LogParserRespo
 export type { LogParserResponse_4dfe1dd_LogFile } from './models/LogParserResponse_4dfe1dd_LogFile';
 export type { LogParserResponse_4dfe1dd_Unit } from './models/LogParserResponse_4dfe1dd_Unit';
 export type { LogUpload_f5eab8c } from './models/LogUpload_f5eab8c';
+export type { ValidationError_6a07bef } from './models/ValidationError_6a07bef';
+export type { ValidationError_6a07bef_ValidationErrorElement } from './models/ValidationError_6a07bef_ValidationErrorElement';
 
 export { DefaultService } from './services/DefaultService';
