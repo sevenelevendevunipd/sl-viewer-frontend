@@ -4,6 +4,7 @@ import {
   DefaultService,
   LogParserError_581e5e4,
   LogParserResponse_4dfe1dd,
+  ValidationError_6a07bef,
 } from "../openapi";
 
 export class LogParsingError extends Error {
@@ -32,11 +33,20 @@ const LogParsingService = (props: PropsWithChildren) => {
       }
       const file = files[0];
       try {
-        return DefaultService.postApiAnalyzeLog({ log: file });
+        return await DefaultService.postApiAnalyzeLog({ log: file });
       } catch (error) {
         if (error instanceof ApiError) {
-          const parser_error = error.body as LogParserError_581e5e4;
-          throw new LogParsingError(parser_error.errors.join(", "));
+          if (error.body instanceof Array) {
+            const validation_error = error.body as ValidationError_6a07bef;
+            throw new LogParsingError(
+              `Request validation error: ${validation_error
+                .map((e) => `${e.msg}: [${e.loc.join(",")}]`)
+                .join("\n")}`
+            );
+          } else {
+            const parser_error = error.body as LogParserError_581e5e4;
+            throw new LogParsingError(parser_error.errors.join(", "));
+          }
         } else if (error instanceof TypeError) {
           throw new LogParsingError(
             `Error while uploading log file: ${error.name}: ${error.message}`
