@@ -4,12 +4,14 @@ import App from "./App";
 import { OpenAPI } from "./openapi";
 import { configure } from "mobx";
 
-configure({
-  enforceActions: "always",
-  computedRequiresReaction: true,
-  reactionRequiresObservable: true,
-  disableErrorBoundaries: true,
-});
+if (process.env.NODE_ENV === "development") {
+  configure({
+    enforceActions: "always",
+    computedRequiresReaction: true,
+    reactionRequiresObservable: true,
+    disableErrorBoundaries: true,
+  });
+}
 
 OpenAPI.BASE = ENV.URL_BASE;
 
