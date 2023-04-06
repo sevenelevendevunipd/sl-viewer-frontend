@@ -14,7 +14,6 @@ export class DateTimeFilteringStrategy implements LogFilteringStrategy {
   minSelectedTimestamp: Date;
   maxSelectedTimestamp: Date;
 
-
   constructor(logFile: LogFile) {
     makeObservable(this, {
       minTimestamp: false,
@@ -25,10 +24,12 @@ export class DateTimeFilteringStrategy implements LogFilteringStrategy {
       setSelected: action.bound,
       reset: action.bound,
     });
-    this.minTimestamp= new Date(logFile.log_entries[logFile.log_entries.length-1].timestamp);
-    this.maxTimestamp= new Date(logFile.log_entries[0].timestamp);
-    this.minSelectedTimestamp= structuredClone(this.minTimestamp);
-    this.maxSelectedTimestamp= structuredClone(this.maxTimestamp);
+    this.minTimestamp = new Date(
+      logFile.log_entries[logFile.log_entries.length - 1].timestamp
+    );
+    this.maxTimestamp = new Date(logFile.log_entries[0].timestamp);
+    this.minSelectedTimestamp = structuredClone(this.minTimestamp);
+    this.maxSelectedTimestamp = structuredClone(this.maxTimestamp);
   }
 
   filter(entries: LogEntry[]) {
@@ -55,18 +56,22 @@ export class DateTimeFilteringStrategy implements LogFilteringStrategy {
     console.log(entries[i].timestamp, entries[j-1].timestamp);
     return entries.slice(i, j);*/
 
-    const start = entries.findIndex(e => new Date(e.timestamp) <= this.maxSelectedTimestamp)
-    const end = entries.findLastIndex(e => new Date(e.timestamp) >= this.minSelectedTimestamp)
-    return entries.slice(start, end)
+    const start = entries.findIndex(
+      (e) => new Date(e.timestamp) <= this.maxSelectedTimestamp
+    );
+    const end = entries.findLastIndex(
+      (e) => new Date(e.timestamp) >= this.minSelectedTimestamp
+    );
+    return entries.slice(start, end);
   }
 
   setSelected(min: Date, max: Date) {
-    this.minSelectedTimestamp = structuredClone(min)
-    this.maxSelectedTimestamp = structuredClone(max)
+    this.minSelectedTimestamp = structuredClone(min);
+    this.maxSelectedTimestamp = structuredClone(max);
   }
 
   reset() {
-    this.minSelectedTimestamp= structuredClone(this.minTimestamp);
-    this.maxSelectedTimestamp= structuredClone(this.maxTimestamp);
+    this.minSelectedTimestamp = structuredClone(this.minTimestamp);
+    this.maxSelectedTimestamp = structuredClone(this.maxTimestamp);
   }
 }
