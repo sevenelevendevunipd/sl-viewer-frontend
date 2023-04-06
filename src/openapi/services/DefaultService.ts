@@ -25,7 +25,6 @@ export class DefaultService {
             formData: formData,
             mediaType: 'multipart/form-data',
             errors: {
-                400: `Bad Request`,
                 422: `Unprocessable Entity`,
             },
         });
