@@ -59,9 +59,10 @@ export class DateTimeFilteringStrategy implements LogFilteringStrategy {
     const start = entries.findIndex(
       (e) => new Date(e.timestamp) <= this.maxSelectedTimestamp
     );
-    const end = entries.findLastIndex(
-      (e) => new Date(e.timestamp) >= this.minSelectedTimestamp
-    )+1;
+    const end =
+      entries.findLastIndex(
+        (e) => new Date(e.timestamp) >= this.minSelectedTimestamp
+      ) + 1;
     return entries.slice(start, end);
   }
 
