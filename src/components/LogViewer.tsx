@@ -11,6 +11,8 @@ import { FirmwareFilteringStrategy } from "../filters/FirmwareFilter";
 import { FirmwareFilterUi } from "./filter/FirmwareFilterUi";
 import { SubunitFilteringStrategy } from "../filters/SubunitFilter";
 import { SubunitFilterUi } from "./filter/SubunitFilterUi";
+import { DateTimeFilteringStrategy } from "../filters/DateTimeFilter";
+import { DateTimeFilterUi } from "./filter/DateTimeFilterUI";
 import LogInfo from "./viewer/LogInfo";
 import { LogData } from "./viewer/LogData";
 
@@ -25,11 +27,14 @@ function LogViewer(props: LogViewerProps) {
   useEffect(() => {
     filteringService.setLogFile(logFile);
 
-    const codeFilter = new CodeFilteringStrategy(logFile);
-    filteringService.register(codeFilter, CodeFilterUi(codeFilter));
+    const datetimeFilter = new DateTimeFilteringStrategy(logFile);
+    filteringService.register(datetimeFilter, DateTimeFilterUi(datetimeFilter));
 
     const FirmwareFilter = new FirmwareFilteringStrategy(logFile);
     filteringService.register(FirmwareFilter, FirmwareFilterUi(FirmwareFilter));
+
+    const codeFilter = new CodeFilteringStrategy(logFile);
+    filteringService.register(codeFilter, CodeFilterUi(codeFilter));
 
     const subunitFilter = new SubunitFilteringStrategy(logFile);
     filteringService.register(subunitFilter, SubunitFilterUi(subunitFilter));

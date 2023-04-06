@@ -18,3 +18,11 @@ export function chunk<T>(elements: T[], chunkSize: number): T[][] {
     [] as T[][]
   );
 }
+
+export function min<T>(a: T, b: T): T {
+  return a <= b ? a : b;
+}
+
+export function max<T>(a: T, b: T): T {
+  return a >= b ? a : b;
+}
