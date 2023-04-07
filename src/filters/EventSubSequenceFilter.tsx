@@ -9,52 +9,32 @@ type LogFile = LogParserResponse_4dfe1dd_LogFile;
 type LogEntry = LogParserResponse_4dfe1dd_LogEntry;
 
 export class EventSubSequenceFilteringStrategy implements LogFilteringStrategy {
-  readonly filterableSequence: string[] = [];
-  selectedSequence: string[] = [];
+  readonly filterableCodes: string[] = [];
+  subSequence: string[] | null = null;
+
   constructor(logFile: LogFile) {
     makeObservable(this, {
-      filterableSequence: false,
-      selectedSequence: observable,
-      filterSet: computed,
+      filterableCodes: false,
+      subSequence: observable,
       filter: false,
       reset: action.bound,
-      selectAll: action.bound,
-      selectNone: action.bound,
       setSelection: action,
     });
-    this.filterableSequence = [
+    this.filterableCodes = [
       ...new Set(logFile.log_entries.map((entry) => entry.code)),
     ].sort();
     this.reset();
   }
-
-  get filterSet() {
-    return new Set(this.selectedSequence);
-  }
   filter(entries: LogEntry[]) {
-    const codeSet = this.filterSet;
-    return entries.filter((e) => codeSet.has(e.code));
-  }
-  reset() {
-    this.selectedSequence = [];
-  }
-  selectAll() {
-    this.setSelection(this.filterableSequence);
-  }
-  selectNone() {
-    this.setSelection([]);
-  }
-  setSelection(selection: string[]) {
-    this.selectedSequence = selection;
-  }
-  patternMatching(entries: LogEntry[], sequence: string[]) {
+    if (!this.subSequence) return entries;
+
     let sequence_index = 0;
     const sequence_logs: LogEntry[] = [];
     for (const log of entries) {
-      if (log.code === sequence[sequence_index]) {
+      if (log.code === this.subSequence[sequence_index]) {
         sequence_logs.push(log);
         sequence_index++;
-        if (sequence_index === sequence.length) {
+        if (sequence_index === this.subSequence.length) {
           return sequence_logs;
         }
       } else {
@@ -62,6 +42,13 @@ export class EventSubSequenceFilteringStrategy implements LogFilteringStrategy {
         sequence_logs.length = 0;
       }
     }
-    return null;
+    return [];
+  }
+  reset() {
+    this.subSequence = null;
+  }
+
+  setSelection(selection?: string[] | null) {
+    this.subSequence = !selection || selection.length === 0 ? null : selection;
   }
 }
