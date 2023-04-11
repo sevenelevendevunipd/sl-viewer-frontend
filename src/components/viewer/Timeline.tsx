@@ -256,7 +256,7 @@ function transformEvents(events: LogEntry[]): [TimelineEntry[], string[]] {
   const groupedEntries = groupBy(
     events.filter((e) => e.type_um == "BIN" && !EXCLUDED_CODES.has(e.code)),
     (e) => {
-      return `${e.unit},${e.subunit} ${e.code}` as string;
+      return `[${e.unit},${e.subunit}] ${e.code}` as string;
     }
   );
   const timelineEntries = [] as TimelineEntry[];
@@ -358,6 +358,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
     <ReactECharts
       theme={theme}
       option={makeOption(timelineEntries, codes, theme)}
+      opts={{renderer: "svg"}}
       style={{ height: "400px", width: "100%" }}
     />
   );
