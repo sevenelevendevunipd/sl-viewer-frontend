@@ -1,23 +1,33 @@
 import { Card } from "primereact/card";
 import { Chips } from "primereact/chips";
+import { InputNumber } from "primereact/inputnumber";
 import { ListBox } from "primereact/listbox";
 import { Button } from "primereact/button";
 import { observer } from "mobx-react-lite";
-import { EventSubSequenceFilteringStrategy } from "../../filters/EventSubSequenceFilter";
+import { EventSequenceFilteringStrategy } from "../../filters/EventSubSequenceFilter";
 
 type ObserverProps = {
-  filter: EventSubSequenceFilteringStrategy;
+  filter: EventSequenceFilteringStrategy;
 };
 
-const SubSequenceObserverUi = observer(({ filter }: ObserverProps) => (
-  <Chips
-    value={filter.subSequence ?? []}
-    onChange={(e) => filter.setSelection(e.value)}
-  />
+const SequenceObserverUi = observer(({ filter }: ObserverProps) => (
+  <>
+    <Chips
+      value={filter.firstEvent}
+      onChange={(e) => (filter.firstEvent = e.value as string[])}
+      separator=","
+    />
+    <Chips
+      value={filter.lastEvent}
+      onChange={(e) => (filter.lastEvent = e.value as string[])}
+      separator=","
+    />
+    <InputNumber onValueChange={(e) => (filter.time = e.value as number)} />
+  </>
 ));
 
-export const EventSubSequenceFilterUi = (
-  filter: EventSubSequenceFilteringStrategy
+export const EventSequenceFilterUi = (
+  filter: EventSequenceFilteringStrategy
 ) => {
   const subCardTitle = (
     <div className="flex align-items-center justify-content-between">
@@ -30,7 +40,7 @@ export const EventSubSequenceFilterUi = (
   return (
     <div className="p-1 col-4" key="subsequence-filter">
       <Card className="h-full" title={subCardTitle}>
-        <SubSequenceObserverUi filter={filter} />
+        <SequenceObserverUi filter={filter} />
       </Card>
     </div>
   );

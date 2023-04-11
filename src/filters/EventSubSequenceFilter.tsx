@@ -8,47 +8,64 @@ import { action, computed, makeObservable, observable } from "mobx";
 type LogFile = LogParserResponse_4dfe1dd_LogFile;
 type LogEntry = LogParserResponse_4dfe1dd_LogEntry;
 
-export class EventSubSequenceFilteringStrategy implements LogFilteringStrategy {
-  readonly filterableCodes: string[] = [];
-  subSequence: string[] | null = null;
+export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
+  readonly minEvent: string[];
+  readonly maxEvent: string[];
+  firstEvent: string[]; //[0]: code [1]: value
+  lastEvent: string[];
+  time: number;
 
   constructor(logFile: LogFile) {
     makeObservable(this, {
-      filterableCodes: false,
-      subSequence: observable,
+      minEvent: false,
+      maxEvent: false,
+      firstEvent: observable,
+      lastEvent: observable,
+      time: observable,
       filter: false,
       reset: action.bound,
-      setSelection: action,
     });
-    this.filterableCodes = [
-      ...new Set(logFile.log_entries.map((entry) => entry.code)),
-    ].sort();
-    this.reset();
+    this.minEvent = [
+      logFile.log_entries[logFile.log_entries.length - 1].code,
+      logFile.log_entries[logFile.log_entries.length - 1].value,
+    ];
+    this.maxEvent = [logFile.log_entries[0].code, logFile.log_entries[0].value];
+    this.firstEvent = structuredClone(this.minEvent);
+    this.lastEvent = structuredClone(this.maxEvent);
+    this.time = Number.MAX_VALUE;
   }
+  //TODO: implementare il filtro
   filter(entries: LogEntry[]) {
-    if (!this.subSequence) return entries;
+    // Filtra i log che rientrano nel range di tempo specificato
 
-    let sequence_index = 0;
-    const sequence_logs: LogEntry[] = [];
-    for (const log of entries) {
-      if (log.code === this.subSequence[sequence_index]) {
-        sequence_logs.push(log);
-        sequence_index++;
-        if (sequence_index === this.subSequence.length) {
-          return sequence_logs;
-        }
-      } else {
-        sequence_index = 0;
-        sequence_logs.length = 0;
+    let sequenceOk = false;
+    const currentSequence = [];
+
+    // Scorre i log filtrati per cercare le sequenze
+    for (let i = entries.length - 1; i <= 0; i--) {
+      sequenceOk =
+        !sequenceOk ||
+        (entries[i].code === this.firstEvent[0] &&
+          entries[i].value === this.firstEvent[1]);
+
+      if (sequenceOk) {
+        currentSequence.push(entries[i]);
       }
+
+      sequenceOk =
+        sequenceOk ||
+        (entries[i].code === this.lastEvent[0] &&
+          entries[i].value === this.lastEvent[1]);
+
+      // Controlla se il tempo tra due log supera il limite massimo
     }
-    return [];
-  }
-  reset() {
-    this.subSequence = null;
+
+    return currentSequence;
   }
 
-  setSelection(selection?: string[] | null) {
-    this.subSequence = !selection || selection.length === 0 ? null : selection;
+  reset() {
+    this.firstEvent = structuredClone(this.minEvent);
+    this.lastEvent = structuredClone(this.maxEvent);
+    this.time = Number.MAX_VALUE;
   }
 }
