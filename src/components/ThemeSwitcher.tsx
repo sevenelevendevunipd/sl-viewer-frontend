@@ -1,4 +1,10 @@
-import { PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
+import {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import * as echarts from "echarts";
 import { InputSwitch } from "primereact/inputswitch";
 import echartsDarkTheme from "../themes/dark.json";

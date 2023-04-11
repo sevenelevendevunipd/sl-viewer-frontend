@@ -358,7 +358,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
     <ReactECharts
       theme={theme}
       option={makeOption(timelineEntries, codes, theme)}
-      opts={{renderer: "svg"}}
+      opts={{ renderer: "svg" }}
       style={{ height: "400px", width: "100%" }}
     />
   );
