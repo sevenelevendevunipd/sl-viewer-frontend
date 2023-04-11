@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import * as echarts from "echarts";
 import { InputSwitch } from "primereact/inputswitch";
 import echartsDarkTheme from "../themes/dark.json";
@@ -48,11 +54,7 @@ function useTheme(): ThemeState {
   ];
 }
 
-type ThemeProviderProps = {
-  children: string | JSX.Element | JSX.Element[];
-};
-
-export function ThemeProvider({ children }: ThemeProviderProps) {
+export function ThemeProvider({ children }: PropsWithChildren) {
   const [theme, setTheme] = useTheme();
   return (
     <ThemeContext.Provider value={[theme, setTheme]}>
