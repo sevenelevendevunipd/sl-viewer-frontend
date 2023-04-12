@@ -13,13 +13,13 @@ type ObserverProps = {
 const SequenceObserverUi = observer(({ filter }: ObserverProps) => (
   <>
     <Chips
-      value={filter.firstEvent}
-      onChange={(e) => (filter.firstEvent = e.value as string[])}
+      value={filter.lastEvent}
+      onChange={(e) => (filter.lastEvent = e.value as string[])}
       separator=","
     />
     <Chips
-      value={filter.lastEvent}
-      onChange={(e) => (filter.lastEvent = e.value as string[])}
+      value={filter.firstEvent}
+      onChange={(e) => (filter.firstEvent = e.value as string[])}
       separator=","
     />
     <InputNumber onValueChange={(e) => (filter.time = e.value as number)} />
