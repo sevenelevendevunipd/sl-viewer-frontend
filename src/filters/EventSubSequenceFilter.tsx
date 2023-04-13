@@ -5,7 +5,10 @@ import {
 } from "../openapi";
 import { LogFilteringStrategy } from "../services/LogFilteringService";
 import { action, computed, entries, makeObservable, observable } from "mobx";
-import { DataTableRowEditCompleteEvent, DataTableRowReorderEvent } from 'primereact/datatable';
+import {
+  DataTableRowEditCompleteEvent,
+  DataTableRowReorderEvent,
+} from "primereact/datatable";
 
 type LogFile = LogParserResponse_4dfe1dd_LogFile;
 type LogEntry = LogParserResponse_4dfe1dd_LogEntry;
@@ -14,15 +17,14 @@ type SearchEntry = {
   value: string;
 };
 export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
-
   readonly FIRST = 0;
   readonly LAST = 1;
 
   readonly minEvent: string[] = [];
   readonly maxEvent: string[] = [];
   readonly filterableCodes: string[] = [];
-  insertingFirst: SearchEntry = { code: '', value: '' };
-  insertingLast: SearchEntry = { code: '', value: '' };
+  insertingFirst: SearchEntry = { code: "", value: "" };
+  insertingLast: SearchEntry = { code: "", value: "" };
   firstValues: SearchEntry[] = [];
   lastValues: SearchEntry[] = [];
 
@@ -46,7 +48,9 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
       insertingLast: observable,
     });
     this.time = 1000;
-    this.filterableCodes = [ ...new Set(logFile.log_entries.map((entry) => entry.code)) ].sort();
+    this.filterableCodes = [
+      ...new Set(logFile.log_entries.map((entry) => entry.code)),
+    ].sort();
 
     // this.minEvent = [
     //   logFile.log_entries[logFile.log_entries.length - 1].code,
@@ -65,23 +69,40 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
 
   search() {}
 
-  filterSubSequence(entries: LogEntry[], first: SearchEntry[], last: SearchEntry[], range: number): LogEntry[] {
+  filterSubSequence(
+    entries: LogEntry[],
+    first: SearchEntry[],
+    last: SearchEntry[],
+    range: number
+  ): LogEntry[] {
     last = last.slice().reverse();
 
     for (let i = 0; i < entries.length; i++) {
       let startFound = true;
       for (let k = 0; k < first.length && startFound; k++) {
-        if (entries[i + k].code !== first[k].code || entries[i + k].value !== first[k].value) {
+        if (
+          entries[i + k].code !== first[k].code ||
+          entries[i + k].value !== first[k].value
+        ) {
           startFound = false;
         }
       }
 
       if (startFound) {
         let lastEndI: number | null = null;
-        for (let j = i + 1; j < entries.length && this.getMs(entries[i].timestamp) - this.getMs(entries[j].timestamp) <= range; j++) {
+        for (
+          let j = i + 1;
+          j < entries.length &&
+          this.getMs(entries[i].timestamp) - this.getMs(entries[j].timestamp) <=
+            range;
+          j++
+        ) {
           let endFound = true;
           for (let k = 0; k < last.length && i < j - k && endFound; k++) {
-            if (entries[j - k].code !== last[k].code || entries[j - k].value !== last[k].value) {
+            if (
+              entries[j - k].code !== last[k].code ||
+              entries[j - k].value !== last[k].value
+            ) {
               endFound = false;
             }
           }
@@ -101,7 +122,12 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
     if (this.firstValues.length <= 0 || this.lastValues.length <= 0) {
       return entries;
     }
-    return this.filterSubSequence(entries, this.firstValues, this.lastValues, this.time);
+    return this.filterSubSequence(
+      entries,
+      this.firstValues,
+      this.lastValues,
+      this.time
+    );
   }
 
   reset() {
@@ -116,16 +142,16 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
 
   addItem(firstLast: number) {
     if (firstLast === this.FIRST) {
-      this.firstValues = [ ...this.firstValues, { ...this.insertingFirst } ];
+      this.firstValues = [...this.firstValues, { ...this.insertingFirst }];
       this.insertingFirst = { code: "", value: "" };
     } else {
-      this.lastValues = [ { ...this.insertingLast },...this.lastValues ];
+      this.lastValues = [{ ...this.insertingLast }, ...this.lastValues];
       this.insertingLast = { code: "", value: "" };
     }
   }
   editItem(e: DataTableRowEditCompleteEvent, firstLast: number) {
-    (firstLast === this.FIRST ? this.firstValues : this.lastValues)[e.index] = e.newData as SearchEntry;
-    
+    (firstLast === this.FIRST ? this.firstValues : this.lastValues)[e.index] =
+      e.newData as SearchEntry;
   }
   reorderItems(e: DataTableRowReorderEvent<SearchEntry[]>, firstLast: number) {
     if (firstLast === this.FIRST) this.firstValues = e.value;
@@ -140,5 +166,4 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
       this.lastValues = [...this.lastValues];
     }
   }
-
 }
