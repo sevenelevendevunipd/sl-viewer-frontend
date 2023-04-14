@@ -4,76 +4,17 @@ import {
   LogParserResponse_4dfe1dd_LogFile,
 } from "../../openapi";
 
+import logs from "./logs.json";
+type LogFile = LogParserResponse_4dfe1dd_LogFile;
+type LogEntry = LogParserResponse_4dfe1dd_LogEntry;
+
 describe("FirmwareFilteringStrategy", () => {
-  type LogFile = LogParserResponse_4dfe1dd_LogFile;
-  type LogEntry = LogParserResponse_4dfe1dd_LogEntry;
   let firmwareFilteringStrategy: FirmwareFilteringStrategy;
-  let logFile: LogFile;
-  logFile = {
-    filename: "test.log",
-    pc_datetime: "2021-01-01 00:00:00",
-    ups_datetime: "2021-01-01 00:00:00",
-    units_subunits: {
-      unit1: {
-        ini_file: "123456",
-      },
-    },
-    log_entries: [
-      {
-        timestamp: "2021-01-01 00:00:00",
-        unit: 3,
-        subunit: 1,
-        unit_subunit_id: 1,
-        ini_filename: "firmware1",
-        code: "code1",
-        description: "string",
-        value: "string",
-        type_um: "string",
-        snapshot: "string",
-        color: "string",
-      },
-      {
-        timestamp: "2021-01-01 00:00:00",
-        unit: 3,
-        subunit: 1,
-        unit_subunit_id: 1,
-        ini_filename: "firmware2",
-        code: "code2",
-        description: "string",
-        value: "string",
-        type_um: "string",
-        snapshot: "string",
-        color: "string",
-      },
-      {
-        timestamp: "2021-01-01 00:00:00",
-        unit: 3,
-        subunit: 1,
-        unit_subunit_id: 1,
-        ini_filename: "firmware3",
-        code: "code3",
-        description: "string",
-        value: "string",
-        type_um: "string",
-        snapshot: "string",
-        color: "string",
-      },
-    ],
-  };
-  let logEntries: LogEntry[];
-  firmwareFilteringStrategy = new FirmwareFilteringStrategy(logFile);
-  logEntries = logFile.log_entries;
-  firmwareFilteringStrategy.filterableFirmwares = [
-    "firmware1",
-    "firmware2",
-    "firmware3",
-  ];
+  const logFile: LogFile = logs;
+  const logEntries: LogEntry[] = logFile.log_entries;
+
   beforeEach(() => {
-    firmwareFilteringStrategy.filterableFirmwares = [
-      "firmware1",
-      "firmware2",
-      "firmware3",
-    ];
+    firmwareFilteringStrategy = new FirmwareFilteringStrategy(logFile);
   });
 
   describe("constructor", () => {
@@ -109,6 +50,7 @@ describe("FirmwareFilteringStrategy", () => {
     it("should select all filterableCodes if none selected", () => {
       firmwareFilteringStrategy.selectNone();
       firmwareFilteringStrategy.selectAll();
+
       expect(firmwareFilteringStrategy.selectedFirmwares).toEqual([
         "firmware1",
         "firmware2",
@@ -137,6 +79,17 @@ describe("FirmwareFilteringStrategy", () => {
         "firmware1",
         "firmware3",
       ]);
+    });
+  });
+  describe("filter", () => {
+    it("should filter", () => {
+      const firmwares = ["firmware1", "firmware2"];
+
+      firmwareFilteringStrategy.setSelection(firmwares);
+      firmwareFilteringStrategy
+        .filter(logFile.log_entries)
+        .map((x) => x.ini_filename)
+        .forEach((c) => expect(firmwares).toContain(c));
     });
   });
 });
