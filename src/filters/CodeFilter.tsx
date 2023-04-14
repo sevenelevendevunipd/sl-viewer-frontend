@@ -9,7 +9,7 @@ type LogFile = LogParserResponse_4dfe1dd_LogFile;
 type LogEntry = LogParserResponse_4dfe1dd_LogEntry;
 
 export class CodeFilteringStrategy implements LogFilteringStrategy {
-  readonly filterableCodes: string[] = [];
+  filterableCodes: string[] = [];
   selectedCodes: string[] = [];
 
   constructor(logFile: LogFile) {
