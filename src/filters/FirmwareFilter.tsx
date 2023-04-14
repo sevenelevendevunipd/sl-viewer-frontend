@@ -9,7 +9,7 @@ type LogFile = LogParserResponse_4dfe1dd_LogFile;
 type LogEntry = LogParserResponse_4dfe1dd_LogEntry;
 
 export class FirmwareFilteringStrategy implements LogFilteringStrategy {
-  readonly filterableFirmwares: string[] = [];
+  filterableFirmwares: string[] = [];
   selectedFirmwares: string[] = [];
 
   constructor(logFile: LogFile) {
