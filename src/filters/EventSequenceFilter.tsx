@@ -1,10 +1,9 @@
-import { useState, Dispatch, SetStateAction } from "react";
 import {
   LogParserResponse_4dfe1dd_LogEntry,
   LogParserResponse_4dfe1dd_LogFile,
 } from "../openapi";
 import { LogFilteringStrategy } from "../services/LogFilteringService";
-import { action, computed, entries, makeObservable, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import {
   DataTableRowEditCompleteEvent,
   DataTableRowReorderEvent,
@@ -51,23 +50,11 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
     this.filterableCodes = [
       ...new Set(logFile.log_entries.map((entry) => entry.code)),
     ].sort();
-
-    // this.minEvent = [
-    //   logFile.log_entries[logFile.log_entries.length - 1].code,
-    //   logFile.log_entries[logFile.log_entries.length - 1].value,
-    // ];
-    // this.maxEvent = [logFile.log_entries[0].code, logFile.log_entries[0].value];
-    // this.firstEvent = structuredClone(this.minEvent);
-    // this.lastEvent = structuredClone(this.maxEvent);
-    // this.lastValues = this.getsecondValue(logFile.log_entries);
-    // this.firstValues = this.getfirstValue(logFile.log_entries);
   }
 
   private getMs(date: string) {
     return new Date(date).valueOf();
   }
-
-  search() {}
 
   filterSubSequence(
     entries: LogEntry[],

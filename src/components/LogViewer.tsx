@@ -7,8 +7,8 @@ import {
 } from "../services/LogFilteringService";
 import { CodeFilteringStrategy } from "../filters/CodeFilter";
 import { CodeFilterUi } from "./filter/CodeFilterUi";
-import { EventSequenceFilteringStrategy } from "../filters/EventSubSequenceFilter";
-import { EventSequenceFilterUi } from "./filter/EventSubSequenceFilterUi";
+import { EventSequenceFilteringStrategy } from "../filters/EventSequenceFilter";
+import { EventSequenceFilterUi } from "./filter/EventSequenceFilterUi";
 import { FirmwareFilteringStrategy } from "../filters/FirmwareFilter";
 import { FirmwareFilterUi } from "./filter/FirmwareFilterUi";
 import { SubunitFilteringStrategy } from "../filters/SubunitFilter";
