@@ -33,29 +33,6 @@ export class DateTimeFilteringStrategy implements LogFilteringStrategy {
   }
 
   filter(entries: LogEntry[]) {
-    /*return entries.filter((e) => {
-      const timestamp: Date = new Date(e.timestamp);
-      return timestamp >= this.minSelectedTimestamp && timestamp <= this.maxSelectedTimestamp;
-    });*/
-    //funzione più efficiente
-    /*let i;
-    for(i=0; i<entries.length; i++) {
-      const timestamp = new Date(entries[i].timestamp);
-      if(timestamp <= this.maxSelectedTimestamp) {
-        break;
-      }
-    }
-    let j;
-    for(j=entries.length; j>0; j--) {
-      const timestamp = new Date(entries[j-1].timestamp);
-      if(timestamp >= this.minSelectedTimestamp) {
-        break;
-      }
-    }
-    console.log(i, j);
-    console.log(entries[i].timestamp, entries[j-1].timestamp);
-    return entries.slice(i, j);*/
-
     const start = entries.findIndex(
       (e) => new Date(e.timestamp) <= this.maxSelectedTimestamp
     );
