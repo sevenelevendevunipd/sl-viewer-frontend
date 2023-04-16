@@ -75,7 +75,7 @@ export class SubunitFilteringStrategy implements LogFilteringStrategy {
     return entries.filter((e) => subunitSet.has(e.unit_subunit_id));
   }
   reset() {
-    return this.selectAll();
+    this.selectAll();
   }
   selectAll() {
     this.selectedSubunits = selectAllTreeEntries(this.subunitTree);
