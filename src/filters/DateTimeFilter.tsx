@@ -28,8 +28,8 @@ export class DateTimeFilteringStrategy implements LogFilteringStrategy {
       logFile.log_entries[logFile.log_entries.length - 1].timestamp
     );
     this.maxTimestamp = new Date(logFile.log_entries[0].timestamp);
-    this.minSelectedTimestamp = structuredClone(this.minTimestamp);
-    this.maxSelectedTimestamp = structuredClone(this.maxTimestamp);
+    this.minSelectedTimestamp = new Date(this.minTimestamp);
+    this.maxSelectedTimestamp = new Date(this.maxTimestamp);
   }
 
   filter(entries: LogEntry[]) {
@@ -44,12 +44,12 @@ export class DateTimeFilteringStrategy implements LogFilteringStrategy {
   }
 
   setSelected(min: Date, max: Date) {
-    this.minSelectedTimestamp = structuredClone(min);
-    this.maxSelectedTimestamp = structuredClone(max);
+    this.minSelectedTimestamp = new Date(min);
+    this.maxSelectedTimestamp = new Date(max);
   }
 
   reset() {
-    this.minSelectedTimestamp = structuredClone(this.minTimestamp);
-    this.maxSelectedTimestamp = structuredClone(this.maxTimestamp);
+    this.minSelectedTimestamp = new Date(this.minTimestamp);
+    this.maxSelectedTimestamp = new Date(this.maxTimestamp);
   }
 }
