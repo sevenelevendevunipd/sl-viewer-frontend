@@ -83,7 +83,7 @@ describe("FirmwareFilteringStrategy", () => {
   });
   describe("filter", () => {
     it("should filter", () => {
-      const firmwares = ["firmware1", "firmware2"];
+      const firmwares = ["firmware1", "firmware3"];
 
       firmwareFilteringStrategy.setSelection(firmwares);
       firmwareFilteringStrategy
