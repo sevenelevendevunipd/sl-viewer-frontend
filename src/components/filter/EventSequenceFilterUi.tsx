@@ -12,11 +12,7 @@ const textEditor = (options: ColumnEditorOptions) => {
     <InputText
       type="text"
       value={options.value}
-      onChange={(e) =>
-        options?.editorCallback
-          ? options.editorCallback(e.target.value)
-          : () => {}
-      }
+      onChange={(e) => options?.editorCallback?.(e.target.value)}
     />
   );
 };
@@ -24,51 +20,39 @@ const textEditor = (options: ColumnEditorOptions) => {
 const SeqTable = observer(
   ({
     filter,
-    firstLast,
+    isFirst,
   }: {
     filter: EventSequenceFilteringStrategy;
-    firstLast: number;
+    isFirst: boolean;
   }) => (
     <>
       <InputText
         type="text"
         placeholder="Code"
-        value={filter.getInserting(firstLast).code}
-        onChange={(e) => (filter.getInserting(firstLast).code = e.target.value)}
+        value={filter.getInserting(isFirst).code}
+        onChange={(e) => (filter.getInserting(isFirst).code = e.target.value)}
       />
       <InputText
         type="text"
         placeholder="Value"
-        value={filter.getInserting(firstLast).value}
-        onChange={(e) =>
-          (filter.getInserting(firstLast).value = e.target.value)
-        }
+        value={filter.getInserting(isFirst).value}
+        onChange={(e) => (filter.getInserting(isFirst).value = e.target.value)}
       />
-      <Button type="button" onClick={(e) => filter.addItem(firstLast)}>
+      <Button type="button" onClick={(e) => filter.addItem(isFirst)}>
         Add
       </Button>
 
       <DataTable
-        value={
-          firstLast === filter.FIRST ? filter.firstValues : filter.lastValues
-        }
+        value={isFirst ? filter.firstValues : filter.lastValues}
         editMode="row"
         dataKey="id"
-        onRowEditComplete={(e) => filter.editItem(e, firstLast)}
-        onRowReorder={(e) => filter.reorderItems(e, firstLast)}
+        onRowEditComplete={(e) => filter.editItem(e, isFirst)}
+        onRowReorder={(e) => filter.reorderItems(e, isFirst)}
         reorderableRows
       >
         <Column rowReorder headerStyle={{ width: "10%" }}></Column>
-        <Column
-          field="code"
-          header="Code"
-          editor={(options) => textEditor(options)}
-        ></Column>
-        <Column
-          field="value"
-          header="Value"
-          editor={(options) => textEditor(options)}
-        ></Column>
+        <Column field="code" header="Code" editor={textEditor}></Column>
+        <Column field="value" header="Value" editor={textEditor}></Column>
         <Column rowEditor headerStyle={{ width: "10%" }}></Column>
         <Column
           body={(rowData, props) => (
@@ -77,7 +61,7 @@ const SeqTable = observer(
                 type="button"
                 icon="pi pi-trash"
                 severity="danger"
-                onClick={(e) => filter.deleteItem(props.rowIndex, firstLast)}
+                onClick={(e) => filter.deleteItem(props.rowIndex, isFirst)}
               ></Button>
             </div>
           )}
@@ -91,11 +75,11 @@ const SeqTable = observer(
 const SeqCard = observer(
   ({ filter }: { filter: EventSequenceFilteringStrategy }) => (
     <>
-      <SeqTable filter={filter} firstLast={filter.LAST} />
-      <SeqTable filter={filter} firstLast={filter.FIRST} />
+      <SeqTable filter={filter} isFirst={false} />
+      <SeqTable filter={filter} isFirst={true} />
       <InputNumber
         value={filter.time}
-        onValueChange={(e) => (filter.time = e.target.value ?? 0)}
+        onValueChange={(e) => filter.setTime(e.target.value)}
       />
     </>
   )

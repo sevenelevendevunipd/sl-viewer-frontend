@@ -15,10 +15,8 @@ type SearchEntry = {
   code: string;
   value: string;
 };
-export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
-  readonly FIRST = 0;
-  readonly LAST = 1;
 
+export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
   readonly minEvent: string[] = [];
   readonly maxEvent: string[] = [];
   readonly filterableCodes: string[] = [];
@@ -106,7 +104,7 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
   }
 
   filter(entries: LogEntry[]): LogEntry[] {
-    if (this.firstValues.length <= 0 || this.lastValues.length <= 0) {
+    if (this.firstValues.length === 0 || this.lastValues.length === 0) {
       return entries;
     }
     return this.filterSubSequence(
@@ -120,15 +118,19 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
   reset() {
     this.firstValues = [];
     this.lastValues = [];
-    this.time = Number.MAX_VALUE;
+    this.time = 1000;
   }
 
-  getInserting(firstLast: number): SearchEntry {
-    return firstLast === this.FIRST ? this.insertingFirst : this.insertingLast;
+  setTime(t?: number | null) {
+    this.time = t ?? 0;
   }
 
-  addItem(firstLast: number) {
-    if (firstLast === this.FIRST) {
+  getInserting(isFirst: boolean): SearchEntry {
+    return isFirst ? this.insertingFirst : this.insertingLast;
+  }
+
+  addItem(isFirst: boolean) {
+    if (isFirst) {
       this.firstValues = [...this.firstValues, { ...this.insertingFirst }];
       this.insertingFirst = { code: "", value: "" };
     } else {
@@ -136,16 +138,16 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
       this.insertingLast = { code: "", value: "" };
     }
   }
-  editItem(e: DataTableRowEditCompleteEvent, firstLast: number) {
-    (firstLast === this.FIRST ? this.firstValues : this.lastValues)[e.index] =
+  editItem(e: DataTableRowEditCompleteEvent, isFirst: boolean) {
+    (isFirst ? this.firstValues : this.lastValues)[e.index] =
       e.newData as SearchEntry;
   }
-  reorderItems(e: DataTableRowReorderEvent<SearchEntry[]>, firstLast: number) {
-    if (firstLast === this.FIRST) this.firstValues = e.value;
+  reorderItems(e: DataTableRowReorderEvent<SearchEntry[]>, isFirst: boolean) {
+    if (isFirst) this.firstValues = e.value;
     else this.lastValues = e.value;
   }
-  deleteItem(index: number, firstLast: number) {
-    if (firstLast === this.FIRST) {
+  deleteItem(index: number, isFirst: boolean) {
+    if (isFirst) {
       this.firstValues.splice(index, 1);
       this.firstValues = [...this.firstValues];
     } else {
