@@ -75,8 +75,11 @@ const SeqTable = observer(
 const SeqCard = observer(
   ({ filter }: { filter: EventSequenceFilteringStrategy }) => (
     <>
+      <div>Ultimi codici</div>
       <SeqTable filter={filter} isFirst={false} />
+      <div>Primi codici</div>
       <SeqTable filter={filter} isFirst={true} />
+      <div>Intervallo di tempo in millisecondi</div>
       <InputNumber
         value={filter.time}
         onValueChange={(e) => filter.setTime(e.target.value)}
