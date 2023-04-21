@@ -38,7 +38,7 @@ const SeqTable = observer(
         value={filter.getInserting(isFirst).value}
         onChange={(e) => (filter.getInserting(isFirst).value = e.target.value)}
       />
-      <Button type="button" onClick={(e) => filter.addItem(isFirst)}>
+      <Button type="button" onClick={() => filter.addItem(isFirst)}>
         Add
       </Button>
 
@@ -61,7 +61,7 @@ const SeqTable = observer(
                 type="button"
                 icon="pi pi-trash"
                 severity="danger"
-                onClick={(e) => filter.deleteItem(props.rowIndex, isFirst)}
+                onClick={() => filter.deleteItem(props.rowIndex, isFirst)}
               ></Button>
             </div>
           )}
