@@ -10,9 +10,10 @@ type ObserverProps = {
 
 const DateTimeFilterObserverUi = observer(({ filter }: ObserverProps) => (
   <>
+    <label htmlFor="inferiore">Estremo temporale inferiore</label>
     <Calendar
+      id="inferiore"
       style={{ width: "100%" }}
-      key="minCalendar"
       value={filter.minSelectedTimestamp}
       onChange={(e) =>
         filter.setSelected(e.value as Date, filter.maxSelectedTimestamp)
@@ -26,7 +27,9 @@ const DateTimeFilterObserverUi = observer(({ filter }: ObserverProps) => (
       hourFormat="24"
       readOnlyInput
     />
+    <label htmlFor="superiore">Estremo temporale superiore</label>
     <Calendar
+      id="superiore"
       style={{ width: "100%" }}
       value={filter.maxSelectedTimestamp}
       onChange={(e) =>
