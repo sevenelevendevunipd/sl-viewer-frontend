@@ -16,6 +16,10 @@ type SearchEntry = {
   value: string;
 };
 
+function getMs(date: string) {
+  return new Date(date).valueOf();
+}
+
 export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
   readonly minEvent: string[] = [];
   readonly maxEvent: string[] = [];
@@ -43,15 +47,18 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
       lastValues: observable,
       insertingFirst: observable,
       insertingLast: observable,
+      filterSubSequence: false,
+      setTime: false,
+      getInserting: false,
+      addItem: false,
+      editItem: false,
+      deleteItem: false,
+      reorderItems: false,
     });
     this.time = 1000;
     this.filterableCodes = [
       ...new Set(logFile.log_entries.map((entry) => entry.code)),
     ].sort();
-  }
-
-  private getMs(date: string) {
-    return new Date(date).valueOf();
   }
 
   filterSubSequence(
@@ -78,8 +85,7 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
         for (
           let j = i + 1;
           j < entries.length &&
-          this.getMs(entries[i].timestamp) - this.getMs(entries[j].timestamp) <=
-            range;
+          getMs(entries[i].timestamp) - getMs(entries[j].timestamp) <= range;
           j++
         ) {
           let endFound = true;
