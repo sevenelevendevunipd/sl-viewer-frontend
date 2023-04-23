@@ -1,0 +1,47 @@
+{
+  "filename": "test.log",
+  "pc_datetime": "2021-01-01 00:00:00",
+  "ups_datetime": "2021-01-01 00:00:00",
+  "units_subunits": { "unit1": { "ini_file": "123456" } },
+  "log_entries": [
+    {
+      "timestamp": "2021-01-16T00:00:00.000000",
+      "unit": 3,
+      "subunit": 1,
+      "unit_subunit_id": 1,
+      "ini_filename": "firmware1",
+      "code": "A",
+      "description": "string",
+      "value": "string",
+      "type_um": "string",
+      "snapshot": "string",
+      "color": "string"
+    },
+    {
+      "timestamp": "2021-01-02T00:00:00.000000",
+      "unit": 3,
+      "subunit": 1,
+      "unit_subunit_id": 1,
+      "ini_filename": "firmware2",
+      "code": "B",
+      "description": "string",
+      "value": "string",
+      "type_um": "string",
+      "snapshot": "string",
+      "color": "string"
+    },
+    {
+      "timestamp": "2021-01-01T01:00:00.000000",
+      "unit": 3,
+      "subunit": 1,
+      "unit_subunit_id": 1,
+      "ini_filename": "firmware3",
+      "code": "C",
+      "description": "string",
+      "value": "string",
+      "type_um": "string",
+      "snapshot": "string",
+      "color": "string"
+    }
+  ]
+}
