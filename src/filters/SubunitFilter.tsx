@@ -50,14 +50,13 @@ export class SubunitFilteringStrategy implements LogFilteringStrategy {
         return {
           key: unit,
           label: `Unit ${unit}: ${value.ini_file}`,
-          children: Object.entries(value.subunits || {}).map(
-            ([subUnit, name]) => {
-              return {
-                key: `s${hashUnitSubUnit(parseInt(unit), parseInt(subUnit))}`,
-                label: `Unit ${unit} SubUnit ${subUnit}: ${name}`,
-              };
-            }
-          ),
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          children: Object.entries(value.subunits!).map(([subUnit, name]) => {
+            return {
+              key: `s${hashUnitSubUnit(parseInt(unit), parseInt(subUnit))}`,
+              label: `Unit ${unit} SubUnit ${subUnit}: ${name}`,
+            };
+          }),
         };
       }
     );

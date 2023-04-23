@@ -1,17 +1,12 @@
 import { CodeFilteringStrategy } from "../CodeFilter";
-import {
-  LogParserResponse_4dfe1dd_LogEntry,
-  LogParserResponse_4dfe1dd_LogFile,
-} from "../../openapi";
+import { LogParserResponse_4dfe1dd_LogFile } from "../../openapi";
 
 import logs from "./logs.json";
 
 type LogFile = LogParserResponse_4dfe1dd_LogFile;
-type LogEntry = LogParserResponse_4dfe1dd_LogEntry;
 
 describe("CodeFilteringStrategy", () => {
   const logFile: LogFile = logs;
-  const logEntries: LogEntry[] = logFile.log_entries;
   let codeFilteringStrategy: CodeFilteringStrategy;
 
   beforeEach(() => {

@@ -1,40 +1,33 @@
 import { SubunitFilteringStrategy } from "../SubunitFilter";
-import {
-  LogParserResponse_4dfe1dd_LogEntry,
-  LogParserResponse_4dfe1dd_LogFile,
-} from "../../openapi";
+import { LogParserResponse_4dfe1dd_LogFile } from "../../openapi";
 
 import logs from "./logssub.json";
 
 type LogFile = LogParserResponse_4dfe1dd_LogFile;
-type LogEntry = LogParserResponse_4dfe1dd_LogEntry;
 const expected = [
   {
     key: "0",
-    label: "Unit 0: MAPK_Unit_v2_04_00.ini",
-    children: [
-      { key: "s0", label: "Unit 0 SubUnit 0: MAPK_Unit_v2_04_00.ini" },
-    ],
+    label: "Unit 0: file1.ini",
+    children: [{ key: "s0", label: "Unit 0 SubUnit 0: file1.ini" }],
   },
   {
     key: "1",
-    label: "Unit 1: MAPK_Unit_v2_04_00.ini",
+    label: "Unit 1: file1.ini",
     children: [
-      { key: "s16", label: "Unit 1 SubUnit 0: MAPK_Unit_v2_04_00.ini" },
+      { key: "s16", label: "Unit 1 SubUnit 0: file1.ini" },
       {
         key: "s17",
-        label: "Unit 1 SubUnit 1: MAPK_Module_RD_IV_v2_04_00.ini",
+        label: "Unit 1 SubUnit 1: file2.ini",
       },
       {
         key: "s30",
-        label: "Unit 1 SubUnit 14: MAPK_ByPass_v2_04_00.ini",
+        label: "Unit 1 SubUnit 14: file3.ini",
       },
     ],
   },
 ];
 describe("subunitFilteringStrategy", () => {
   const logFile: LogFile = logs;
-  const logEntries: LogEntry[] = logFile.log_entries;
   let subunitFilteringStrategy: SubunitFilteringStrategy;
 
   beforeEach(() => {
