@@ -16,8 +16,10 @@ it("show calendar inferiore", () => {
     const filter = new DateTimeFilteringStrategy(logFile);
     render(DateTimeFilterUi(filter));
 
-    const calendar = screen.getByTestId("estremoInferiore"); 
-    expect(calendar).toBeInTheDocument();
+    const calendarLabel = screen.getByText(/start/i)
+    
+    expect(calendarLabel).toBeInTheDocument();
+    expect(calendarLabel.nextSibling).toHaveClass("p-calendar");
 });
 
 it("show calendar superiore", () => {
@@ -26,6 +28,8 @@ it("show calendar superiore", () => {
     const filter = new DateTimeFilteringStrategy(logFile);
     render(DateTimeFilterUi(filter));
 
-    const calendar = screen.getByTestId("estremoSuperiore"); 
-    expect(calendar).toBeInTheDocument();
+    const calendarLabel = screen.getByText(/end/i);
+    
+    expect(calendarLabel).toBeInTheDocument();
+    expect(calendarLabel.nextSibling).toHaveClass("p-calendar");
 });
