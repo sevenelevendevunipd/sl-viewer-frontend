@@ -38,9 +38,11 @@ const SeqTable = observer(
         value={filter.getInserting(isFirst).value}
         onChange={(e) => (filter.getInserting(isFirst).value = e.target.value)}
       />
-      <Button type="button" onClick={() => filter.addItem(isFirst)}>
-        Add
-      </Button>
+      <Button 
+        type="button" 
+        label="Add" 
+        onClick={() => filter.addItem(isFirst)}
+      />
 
       <DataTable
         value={isFirst ? filter.firstValues : filter.lastValues}
