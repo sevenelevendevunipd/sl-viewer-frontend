@@ -33,7 +33,7 @@ it("Select none test CodeFilterUi", () => {
 
 });
 
-it("list test", () => {
+it("list all codes of CodeFilteringStrategy test", () => {
     const code = "code1";
     
     const filter = new CodeFilteringStrategy(logFile);

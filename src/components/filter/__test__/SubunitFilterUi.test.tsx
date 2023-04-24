@@ -28,7 +28,7 @@ it("Select all test Subunit", () => {
 
 });
 
-it("Select all test Subunit", () => {
+it("Select none test Subunit", () => {
     const filter = new SubunitFilteringStrategy(logFile);
     Object.defineProperty(filter, "subunitTree", {value: []});
 
