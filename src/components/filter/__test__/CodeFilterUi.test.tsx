@@ -34,16 +34,19 @@ it("Select none test CodeFilterUi", () => {
 });
 
 it("list all codes of CodeFilteringStrategy test", () => {
-    const code = "code1";
+    const codes = ["code1", "code2", "code3"];
     
     const filter = new CodeFilteringStrategy(logFile);
-    Object.defineProperty(filter, "filterableCodes", {value: [code]});
+    Object.defineProperty(filter, "filterableCodes", {value: codes});
     
 
     render(CodeFilterUi(filter));
-
-    const codeElement = screen.getByText(code);
-    expect(codeElement).toBeInTheDocument();
+    
+    codes.forEach(code=>{
+        const codeElement = screen.getByText(code);
+        expect(codeElement).toBeInTheDocument();
+    })
+    
 });
 
 

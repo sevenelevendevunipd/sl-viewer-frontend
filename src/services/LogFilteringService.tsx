@@ -23,7 +23,7 @@ export interface ILogFilteringService {
   get filtersUi(): JSX.Element[];
 }
 
-class ConcreteLogFilteringService implements ILogFilteringService {
+export class ConcreteLogFilteringService implements ILogFilteringService {
   registeredFilters: LogFilteringStrategy[] = [];
   filterUIs: JSX.Element[] = [];
   logFile: LogFile | null = null;
