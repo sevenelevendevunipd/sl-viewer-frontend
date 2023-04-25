@@ -12,7 +12,7 @@
       "ini_filename": "firmware1",
       "code": "A",
       "description": "string",
-      "value": "string",
+      "value": "ON",
       "type_um": "string",
       "snapshot": "string",
       "color": "string"
@@ -25,7 +25,7 @@
       "ini_filename": "firmware2",
       "code": "B",
       "description": "string",
-      "value": "string",
+      "value": "OFF",
       "type_um": "string",
       "snapshot": "string",
       "color": "string"
@@ -38,7 +38,7 @@
       "ini_filename": "firmware3",
       "code": "C",
       "description": "string",
-      "value": "string",
+      "value": "ON",
       "type_um": "string",
       "snapshot": "string",
       "color": "string"
