@@ -1,7 +1,7 @@
 import { describe, expect, test, jest } from "@jest/globals";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import user from "@testing-library/user-event";
 import { EventSequenceFilterUi } from "../EventSequenceFilterUi";
-
 import { EventSequenceFilteringStrategy } from "../../../filters/EventSequenceFilter";
 jest.mock("../../../filters/EventSequenceFilter");
 import logs from "../../../filters/__test__/logs.json";
@@ -27,7 +27,23 @@ describe("EventSequenceFilterUi", () => {
     }
     expect(filter.addItem).toBeCalledTimes(buttons.length);
   });
-  it("Table exist EventSequenceFilterUi", () => {
-    const table = screen.getByRole("table");
+
+  it("Take input on code EventSequenceFilterUi", () => {
+    const codeInputs = screen.getAllByPlaceholderText("Code");
+    const codeValues = screen.getAllByPlaceholderText("Value");
+    const buttons = screen.getAllByText(/Add/i);
+    console.log(buttons.length);
+    codeInputs[0].onchange = jest.fn();
+    expect(codeInputs.length).toBe(buttons.length);
+    expect(codeValues.length).toBe(buttons.length);
+
+    filter.getInserting = jest.fn();
+
+    for (const i of codeInputs) user.type(i, "C");
+    for (const i of codeValues) user.type(i, "V");
+    for (const b of buttons) b.click();
+    expect(filter.addItem).toBeCalledTimes(buttons.length);
+
+    // expect(filter.getInserting(true)).toBeCalled(buttons.length);
   });
 });
