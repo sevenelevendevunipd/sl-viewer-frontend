@@ -1,31 +1,40 @@
 import React from "react";
-import { groupBy } from "../utils";
-import { chunk } from "../utils";
-import { min } from "../utils";
-import { max } from "../utils";
+import { min, max, groupBy, chunk } from "../utils"
 
 it("min", () => {
-    const m = min(3,4);
-    expect(m).toEqual(3);
+    
+    const data1 = "2021-01-16T00:00:00.000000";
+    const data2 = "2021-01-02T00:00:00.000000";
+
+
+    const m = min(data1,data2);
+    expect(m).toEqual(data2);
+    
 });
 
 it("max", () => {
-    const m = max(3,4);
-    expect(m).toEqual(4);
+
+    const data1 = "2021-01-16T00:00:00.000000";
+    const data2 = "2021-01-02T00:00:00.000000";
+
+    const m = max(data1 , data2);
+    expect(m).toEqual(data1);
 });
 
-interface ex {
+
+
+it("groupBy", () => {
+
+  interface ex {
     code: string;
     value: string;
   }
   
-const example: ex[] = [
-  { code: 'A000', value: 'ON' },
-  { code: 'A000', value: 'OFF' },
-  { code: 'A006', value: 'ON' },
-];
-
-it("groupBy", () => {
+  const example: ex[] = [
+    { code: 'A000', value: 'ON' },
+    { code: 'A000', value: 'OFF' },
+    { code: 'A006', value: 'ON' },
+  ];
 
     const r = groupBy(example, (ex)=> ex.code);
     expect(r["A000"][0].value).toBe("ON");
