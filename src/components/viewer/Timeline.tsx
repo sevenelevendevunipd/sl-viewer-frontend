@@ -171,6 +171,7 @@ function makeOption(
     ],
   };
 }
+
 const renderGanttItem: CustomSeriesRenderItem = function (params, api) {
   const codeIndex = api.value(DIM_CODE_INDEX);
   const entryStart = api.coord([api.value(DIM_START), codeIndex]);
@@ -224,6 +225,7 @@ const renderGanttItem: CustomSeriesRenderItem = function (params, api) {
     ],
   };
 };
+
 const renderAxisLabelItem: CustomSeriesRenderItem = function (params, api) {
   const y = api.coord([0, api.value(0)])[1];
   if (y < (params.coordSys as unknown as Rect).y + 5) {
@@ -246,7 +248,7 @@ function clipRectByRect(params: CustomSeriesRenderItemParams, rect: Rect) {
   return echarts.graphic.clipRectByRect(rect, p);
 }
 
-function transformEvents(events: LogEntry[]): [TimelineEntry[], string[]] {
+export function transformEvents(events: LogEntry[]): [TimelineEntry[], string[]] {
   /* REMEMBER THAT events IS SORTED IN REVERSE CHRONO ORDER */
   if (events.length == 0) {
     return [[], []];
@@ -259,6 +261,7 @@ function transformEvents(events: LogEntry[]): [TimelineEntry[], string[]] {
       return `[${e.unit},${e.subunit}] ${e.code}` as string;
     }
   );
+  
   const timelineEntries = [] as TimelineEntry[];
   Object.values(groupedEntries).forEach((entries, codeIndex) => {
     // if last entry in log is ON add a fake OFF entry at maxTimestamp
