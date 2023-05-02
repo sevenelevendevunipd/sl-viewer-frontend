@@ -1,3 +1,7 @@
+:root{
+  --row-bg-color: var(--surface-card);
+}
+
 .dark {
   @import "../../node_modules/primereact/resources/themes/lara-dark-indigo/theme";
 
@@ -101,4 +105,8 @@
 
 #logo {
   color: var(--primary-color);
+}
+
+.row-bg-color {
+  background-color: var(--row-bg-color);
 }

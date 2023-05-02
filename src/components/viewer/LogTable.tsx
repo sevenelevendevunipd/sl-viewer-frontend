@@ -1,14 +1,33 @@
 import { observer } from "mobx-react-lite";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
+import { stringToColor } from "../../utils";
 import {
   ILogFilteringService,
   useLogFilteringService,
 } from "../../services/LogFilteringService";
+import { LogParserResponse_4dfe1dd_LogEntry } from "../../openapi";
 
 type ObserverProps = {
   filteringService: ILogFilteringService;
 };
+
+function createStyle(color: string){
+  const style= document.getElementsByTagName('style');
+  const colorTag= color.replace('#','row-');
+  const pos= style[0].innerHTML.indexOf(colorTag);
+  if(pos<0)
+    style[1].innerHTML+= `.${colorTag} {color: ${color} !important;}`;
+  return colorTag;
+}
+
+const rowClass = (rowData: LogParserResponse_4dfe1dd_LogEntry) => {
+  const color= stringToColor(rowData.code);
+  let colorTag;
+  if(rowData.color!=undefined)
+    colorTag= createStyle(color);
+  return {[colorTag]: color!=undefined};
+}
 
 const LogTableObserver = observer(({ filteringService }: ObserverProps) => (
   <>
@@ -24,6 +43,7 @@ const LogTableObserver = observer(({ filteringService }: ObserverProps) => (
       paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
       rows={10}
+      rowClassName={rowClass}
     >
       <Column
         key="timestamp"
