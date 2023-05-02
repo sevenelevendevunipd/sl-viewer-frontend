@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { stringToColor } from "../../utils";
+import { reshade, stringToColor } from "../../utils";
 import {
   ILogFilteringService,
   useLogFilteringService,
@@ -15,6 +15,10 @@ type ObserverProps = {
 function createStyle(color: string){
   const style= document.getElementsByTagName('style');
   const colorTag= color.replace('#','row-');
+  /*
+  if(capisco che tema uso) color= reshade(color, 50);
+  else color= reshade(color, -50);
+  */
   const pos= style[0].innerHTML.indexOf(colorTag);
   if(pos<0)
     style[1].innerHTML+= `.${colorTag} {color: ${color} !important;}`;
