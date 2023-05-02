@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { stringToColor } from "../../utils";
+import { reshade, stringToColor } from "../../utils";
 import {
   ILogFilteringService,
   useLogFilteringService,
