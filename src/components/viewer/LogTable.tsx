@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
+import { getContrastYIQ, stringToColor } from "../../utils";
 import {
   ILogFilteringService,
   useLogFilteringService,
@@ -9,6 +10,18 @@ import {
 type ObserverProps = {
   filteringService: ILogFilteringService;
 };
+
+function createStyle(bgColor: string) {
+  const style = document.getElementsByTagName("style");
+  const colorTag = bgColor.replace("#", "row-");
+  const pos = style[0].innerHTML.indexOf(colorTag);
+  if (pos < 0)
+    style[1].innerHTML += `.${colorTag} {
+    background-color: ${bgColor} !important;
+    color: ${getContrastYIQ(bgColor)} !important;
+    }`;
+  return colorTag;
+}
 
 const LogTableObserver = observer(({ filteringService }: ObserverProps) => (
   <>
@@ -24,6 +37,12 @@ const LogTableObserver = observer(({ filteringService }: ObserverProps) => (
       paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
       rows={10}
+      rowClassName={(rowData) => {
+        const color = stringToColor(rowData.code);
+        let colorTag: string | undefined;
+        if (rowData.color != undefined) colorTag = createStyle(color);
+        return { [colorTag ?? ""]: color != undefined };
+      }}
     >
       <Column
         key="timestamp"
