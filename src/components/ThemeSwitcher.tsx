@@ -54,14 +54,6 @@ function useTheme(): ThemeState {
   ];
 }
 
-export function useThemeName() {
-  const themeContext = useContext(ThemeContext);
-  if (themeContext == undefined) {
-    throw new Error("useThemeName used outside ThemeProvider");
-  }
-  return themeContext[0];
-}
-
 export function ThemeProvider({ children }: PropsWithChildren) {
   const [theme, setTheme] = useTheme();
   return (
