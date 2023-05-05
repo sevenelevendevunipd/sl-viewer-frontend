@@ -15,6 +15,12 @@ export class DateTimeFilteringStrategy implements LogFilteringStrategy {
   maxSelectedTimestamp: Date;
 
   constructor(logFile: LogFile) {
+    this.minTimestamp = new Date(
+      logFile.log_entries[logFile.log_entries.length - 1].timestamp
+    );
+    this.maxTimestamp = new Date(logFile.log_entries[0].timestamp);
+    this.minSelectedTimestamp = new Date(this.minTimestamp);
+    this.maxSelectedTimestamp = new Date(this.maxTimestamp);
     makeObservable(this, {
       minTimestamp: false,
       maxTimestamp: false,
@@ -24,12 +30,6 @@ export class DateTimeFilteringStrategy implements LogFilteringStrategy {
       setSelected: action.bound,
       reset: action.bound,
     });
-    this.minTimestamp = new Date(
-      logFile.log_entries[logFile.log_entries.length - 1].timestamp
-    );
-    this.maxTimestamp = new Date(logFile.log_entries[0].timestamp);
-    this.minSelectedTimestamp = new Date(this.minTimestamp);
-    this.maxSelectedTimestamp = new Date(this.maxTimestamp);
   }
 
   filter(entries: LogEntry[]) {

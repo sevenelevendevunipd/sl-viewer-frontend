@@ -34,6 +34,10 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
   time: number;
 
   constructor(logFile: LogFile) {
+    this.time = 1000;
+    this.filterableCodes = [
+      ...new Set(logFile.log_entries.map((entry) => entry.code)),
+    ].sort();
     makeObservable(this, {
       selectedFirst: observable,
       selectedLast: observable,
@@ -48,17 +52,13 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
       insertingFirst: observable,
       insertingLast: observable,
       filterSubSequence: false,
-      setTime: false,
+      setTime: action.bound,
       getInserting: false,
       addItem: false,
       editItem: false,
       deleteItem: false,
       reorderItems: false,
     });
-    this.time = 1000;
-    this.filterableCodes = [
-      ...new Set(logFile.log_entries.map((entry) => entry.code)),
-    ].sort();
   }
 
   filterSubSequence(
