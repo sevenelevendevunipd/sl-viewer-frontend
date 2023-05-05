@@ -101,7 +101,7 @@ export const EventSequenceFilterUi = (
     </div>
   );
   return (
-    <div className="p-1 col-4" key="subsequence-filter">
+    <div className="p-1 col-5" key="subsequence-filter">
       <Card className="h-full" title={subCardTitle}>
         <SeqCard filter={filter} />
       </Card>
