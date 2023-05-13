@@ -30,6 +30,7 @@ const LFS = (entries: LogParserResponse_4dfe1dd_LogEntry[]) =>
 
 it("LogTable", () => {
   const lfs = LFS(logs.log_entries);
+  render(<style></style>);
   render(
     <LogFilteringService logFilteringService={lfs}>
       <LogTable />

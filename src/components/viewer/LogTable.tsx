@@ -16,7 +16,7 @@ function createStyle(bgColor: string) {
   const colorTag = bgColor.replace("#", "row-");
   const pos = style[0].innerHTML.indexOf(colorTag);
   if (pos < 0)
-    style[1].innerHTML += `.${colorTag} {
+    style[0].innerHTML += `.${colorTag} {
     background-color: ${bgColor} !important;
     color: ${getContrastYIQ(bgColor)} !important;
     }`;
