@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from "@jest/globals";
+import { expect, jest } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import { FirmwareFilterUi } from "../FirmwareFilterUi";
 

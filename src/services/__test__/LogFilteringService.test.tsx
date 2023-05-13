@@ -1,19 +1,12 @@
-import { log } from "console";
-import LogFilteringService, {
+import {
   ConcreteLogFilteringService,
   LogFilteringStrategy,
-  useLogFilteringService,
 } from "../LogFilteringService";
 import {
   LogParserResponse_4dfe1dd_LogEntry,
   LogParserResponse_4dfe1dd_LogFile,
 } from "../../openapi";
 import logs from "../../filters/__test__/logs.json";
-import { Key } from "react";
-import { createContext } from "vm";
-import { useContext } from "react";
-import { render } from "@testing-library/react";
-import { FilterUi } from "../LogFilteringService";
 
 type LogFile = LogParserResponse_4dfe1dd_LogFile;
 type LogEntry = LogParserResponse_4dfe1dd_LogEntry;
@@ -32,7 +25,7 @@ describe("ConcreteLogFilteringService", () => {
   const logFile: LogFile = logs;
   let logFilteringService: ConcreteLogFilteringService;
   let lfs: LFS;
-  let ui = <span>hello world</span>;
+  const ui = <span>hello world</span>;
 
   beforeEach(() => {
     logFilteringService = new ConcreteLogFilteringService();

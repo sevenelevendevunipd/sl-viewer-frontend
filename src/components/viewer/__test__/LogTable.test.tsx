@@ -7,10 +7,10 @@ import LogFilteringService, {
   LogFilteringStrategy,
 } from "../../../services/LogFilteringService";
 import logs from "../../../filters/__test__/logs.json";
-import { entries } from "mobx";
 
 const LFS = (entries: LogParserResponse_4dfe1dd_LogEntry[]) =>
   ({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     register: function (filter: LogFilteringStrategy, ui: JSX.Element): void {
       throw new Error("Function not implemented.");
     },
@@ -18,6 +18,7 @@ const LFS = (entries: LogParserResponse_4dfe1dd_LogEntry[]) =>
     resetAll: function (): void {
       throw new Error("Function not implemented.");
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setLogFile: function (logFile: LogParserResponse_4dfe1dd_LogFile): void {
       throw new Error("Function not implemented.");
     },
@@ -46,6 +47,7 @@ it("LogTable", () => {
       "value",
     ].forEach((field) => {
       const element = screen.getAllByText(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         new RegExp((entry as any)[field], "i")
       );
       expect(element[0]).toBeInTheDocument();
