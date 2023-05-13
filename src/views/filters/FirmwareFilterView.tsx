@@ -2,24 +2,21 @@ import { Card } from "primereact/card";
 import { ListBox } from "primereact/listbox";
 import { Button } from "primereact/button";
 import { observer } from "mobx-react-lite";
-import { FirmwareFilteringStrategy } from "../../filters/FirmwareFilter";
+import { IFirmwareFilterViewModel } from "../../viewmodels/filters/FirmwareFilterViewModel";
+import { ViewModelProps } from "../../utils";
 
-type ObserverProps = {
-  filter: FirmwareFilteringStrategy;
-};
-
-const FirmwareFilterObserverUi = observer(({ filter }: ObserverProps) => (
+const FirmwareFilterObserverUi = observer(({ viewModel }: ViewModelProps<IFirmwareFilterViewModel>) => (
   <ListBox
-    options={filter.filterableFirmwares}
+    options={viewModel.options}
     multiple
     filter
-    value={filter.selectedFirmwares}
-    onChange={(e) => (filter.selectedFirmwares = e.value)}
+    value={viewModel.selection()}
+    onChange={viewModel.onSelectionChange}
     listStyle={{ height: "300px" }}
   />
 ));
 
-export const FirmwareFilterUi = (filter: FirmwareFilteringStrategy) => {
+export const FirmwareFilterUi = (viewModel: IFirmwareFilterViewModel) => {
   const firmwareCardTitle = (
     <div className="flex align-items-center justify-content-between">
       Filter by Firmware
@@ -27,12 +24,12 @@ export const FirmwareFilterUi = (filter: FirmwareFilteringStrategy) => {
         <Button
           className="mx-4"
           label="Select All"
-          onClick={filter.selectAll}
+          onClick={viewModel.selectAll}
         />
         <Button
           className="mx-4"
           label="Select None"
-          onClick={filter.selectNone}
+          onClick={viewModel.selectNone}
         />
       </div>
     </div>
@@ -40,7 +37,7 @@ export const FirmwareFilterUi = (filter: FirmwareFilteringStrategy) => {
   return (
     <div className="p-1 col-4" key="firmware-filter">
       <Card className="h-full" title={firmwareCardTitle}>
-        <FirmwareFilterObserverUi filter={filter} />
+        <FirmwareFilterObserverUi viewModel={viewModel} />
       </Card>
     </div>
   );
