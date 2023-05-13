@@ -2,24 +2,24 @@ import { Card } from "primereact/card";
 import { ListBox } from "primereact/listbox";
 import { Button } from "primereact/button";
 import { observer } from "mobx-react-lite";
-import { CodeFilteringStrategy } from "../../filters/CodeFilter";
+import { ICodeFilterViewModel } from "../../viewmodels/filters/CodeFilterViewModel";
 
-type ObserverProps = {
-  filter: CodeFilteringStrategy;
+type ViewModelProps = {
+  viewModel: ICodeFilterViewModel;
 };
 
-const CodeFilterObserverUi = observer(({ filter }: ObserverProps) => (
+const CodeFilterObserverView = observer(({ viewModel }: ViewModelProps) => (
   <ListBox
-    options={filter.filterableCodes}
+    options={viewModel.filterableCodes}
     multiple
     filter
-    value={filter.selectedCodes}
-    onChange={(e) => (filter.selectedCodes = e.value)}
+    value={viewModel.selectedCodes}
+    onChange={viewModel.onSelectionChange}
     listStyle={{ height: "300px" }}
   />
 ));
 
-export const CodeFilterUi = (filter: CodeFilteringStrategy) => {
+export const CodeFilterView = (viewModel: ICodeFilterViewModel) => {
   const codeCardTitle = (
     <div className="flex align-items-center justify-content-between">
       Filter by Code
@@ -27,12 +27,12 @@ export const CodeFilterUi = (filter: CodeFilteringStrategy) => {
         <Button
           className="mx-4"
           label="Select All"
-          onClick={filter.selectAll}
+          onClick={viewModel.onSelectAllClick}
         />
         <Button
           className="mx-4"
           label="Select None"
-          onClick={filter.selectNone}
+          onClick={viewModel.onSelectNoneClick}
         />
       </div>
     </div>
@@ -40,7 +40,7 @@ export const CodeFilterUi = (filter: CodeFilteringStrategy) => {
   return (
     <div className="p-1 col-4" key="code-filter">
       <Card className="h-full" title={codeCardTitle}>
-        <CodeFilterObserverUi filter={filter} />
+        <CodeFilterObserverView viewModel={viewModel} />
       </Card>
     </div>
   );

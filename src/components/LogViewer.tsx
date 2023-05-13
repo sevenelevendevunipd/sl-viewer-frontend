@@ -6,7 +6,7 @@ import {
   useLogFilteringService,
 } from "../services/LogFilteringService";
 import { CodeFilteringStrategy } from "../filters/CodeFilter";
-import { CodeFilterUi } from "./filter/CodeFilterUi";
+import { CodeFilterView } from "../views/filters/CodeFilterView";
 import { EventSequenceFilteringStrategy } from "../filters/EventSequenceFilter";
 import { EventSequenceFilterUi } from "./filter/EventSequenceFilterUi";
 import { FirmwareFilteringStrategy } from "../filters/FirmwareFilter";
@@ -17,6 +17,7 @@ import { DateTimeFilteringStrategy } from "../filters/DateTimeFilter";
 import { DateTimeFilterUi } from "./filter/DateTimeFilterUI";
 import LogInfo from "./viewer/LogInfo";
 import { LogData } from "./viewer/LogData";
+import { CodeFilterViewModel } from "../viewmodels/filters/CodeFilterViewModel";
 
 declare interface LogViewerProps {
   log: LogParserResponse_4dfe1dd_LogFile;
@@ -39,7 +40,7 @@ function LogViewer(props: LogViewerProps) {
     filteringService.register(FirmwareFilter, FirmwareFilterUi(FirmwareFilter));
 
     const codeFilter = new CodeFilteringStrategy(logFile);
-    filteringService.register(codeFilter, CodeFilterUi(codeFilter));
+    filteringService.register(codeFilter, CodeFilterView(CodeFilterViewModel(codeFilter)));
 
     const subunitFilter = new SubunitFilteringStrategy(logFile);
     filteringService.register(subunitFilter, SubunitFilterUi(subunitFilter));
