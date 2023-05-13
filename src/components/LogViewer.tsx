@@ -12,7 +12,7 @@ import { EventSequenceFilterUi } from "./filter/EventSequenceFilterUi";
 import { FirmwareFilteringStrategy } from "../filters/FirmwareFilter";
 import { FirmwareFilterUi as FirmwareFilterView } from "../views/filters/FirmwareFilterView";
 import { SubunitFilteringStrategy } from "../filters/SubunitFilter";
-import { SubunitFilterUi } from "./filter/SubunitFilterUi";
+import { SubunitFilterView } from "../views/filters/SubunitFilterView";
 import { DateTimeFilteringStrategy } from "../filters/DateTimeFilter";
 import { DateTimeFilterView } from "../views/filters/DateTimeFilterView";
 import LogInfo from "./viewer/LogInfo";
@@ -20,6 +20,7 @@ import { LogData } from "./viewer/LogData";
 import { CodeFilterViewModel } from "../viewmodels/filters/CodeFilterViewModel";
 import { DateTimeFilterViewModel } from "../viewmodels/filters/DateTimeFilterViewModel";
 import { FirmwareFilterViewModel } from "../viewmodels/filters/FirmwareFilterViewModel";
+import { SubunitFilterViewModel } from "../viewmodels/filters/SubunitFilterViewModel";
 
 declare interface LogViewerProps {
   log: LogParserResponse_4dfe1dd_LogFile;
@@ -45,7 +46,7 @@ function LogViewer(props: LogViewerProps) {
     filteringService.register(codeFilter, CodeFilterView(CodeFilterViewModel(codeFilter)));
 
     const subunitFilter = new SubunitFilteringStrategy(logFile);
-    filteringService.register(subunitFilter, SubunitFilterUi(subunitFilter));
+    filteringService.register(subunitFilter, SubunitFilterView(SubunitFilterViewModel(subunitFilter)));
 
     return filteringService.removeFilters;
   }, [logFile]);
