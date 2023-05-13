@@ -37,7 +37,7 @@ const SubunitFilterObserverUi = observer(({ filter }: ObserverProps) => {
 export const SubunitFilterUi = (filter: SubunitFilteringStrategy) => {
   const subunitCardTitle = (
     <div className="flex align-items-center justify-content-between">
-      Filter by Unit/SubUnit
+      Filter by SubUnit
       <div>
         <Button
           className="mx-4"
@@ -53,7 +53,7 @@ export const SubunitFilterUi = (filter: SubunitFilteringStrategy) => {
     </div>
   );
   return (
-    <div className="p-1 col-5" key="subunit-filter">
+    <div className="p-1 col-4" key="subunit-filter">
       <Card className="h-full" title={subunitCardTitle}>
         <SubunitFilterObserverUi filter={filter} />
       </Card>

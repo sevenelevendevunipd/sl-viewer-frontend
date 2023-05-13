@@ -1,4 +1,4 @@
-import { createContext, useContext, PropsWithChildren } from "react";
+import { createContext, useContext, PropsWithChildren, Fragment } from "react";
 import {
   LogParserResponse_4dfe1dd_LogEntry,
   LogParserResponse_4dfe1dd_LogFile,
@@ -103,7 +103,7 @@ type ObserverProps = {
 const FilterUiObserver = observer(({ filteringService }: ObserverProps) => (
   <>
     {filteringService.filtersUi.map((f) => (
-      <>{f}</>
+      <Fragment key={f.key}>{f}</Fragment>
     ))}
   </>
 ));

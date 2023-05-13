@@ -75,13 +75,13 @@ const SeqTable = observer(
 const SeqCard = observer(
   ({ filter }: { filter: EventSequenceFilteringStrategy }) => (
     <>
-      <div>Ultimi codici</div>
+      <div>First codes</div>
       <SeqTable filter={filter} isFirst={false} />
-      <div>Primi codici</div>
+      <div>Last codes</div>
       <SeqTable filter={filter} isFirst={true} />
-      <label htmlFor="tempo">Intervallo di tempo in millisecondi</label>
+      <label htmlFor="maxTimeDelta">Max time delta</label>
       <InputNumber
-        id="tempo"
+        id="maxTimeDelta"
         value={filter.time}
         onValueChange={(e) => filter.setTime(e.target.value)}
       />
@@ -101,7 +101,7 @@ export const EventSequenceFilterUi = (
     </div>
   );
   return (
-    <div className="p-1 col-4" key="subsequence-filter">
+    <div className="p-1 col-5" key="subsequence-filter">
       <Card className="h-full" title={subCardTitle}>
         <SeqCard filter={filter} />
       </Card>
