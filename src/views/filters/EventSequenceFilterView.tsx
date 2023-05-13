@@ -2,10 +2,11 @@ import { Card } from "primereact/card";
 import { InputNumber } from "primereact/inputnumber";
 import { Button } from "primereact/button";
 import { observer } from "mobx-react-lite";
-import { EventSequenceFilteringStrategy } from "../../filters/EventSequenceFilter";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
 import { Column, ColumnEditorOptions } from "primereact/column";
+import { IEventSequenceFilterViewModel } from "../../viewmodels/filters/EventSequenceFilterViewModel";
+import { ViewModelProps } from "../../utils";
 
 const textEditor = (options: ColumnEditorOptions) => {
   return (
@@ -19,37 +20,32 @@ const textEditor = (options: ColumnEditorOptions) => {
 
 const SeqTable = observer(
   ({
-    filter,
+    viewModel,
     isFirst,
   }: {
-    filter: EventSequenceFilteringStrategy;
     isFirst: boolean;
-  }) => (
+  } & ViewModelProps<IEventSequenceFilterViewModel>) => (
     <>
       <InputText
         type="text"
         placeholder="Code"
-        value={filter.getInserting(isFirst)?.code}
-        onChange={(e) => (filter.getInserting(isFirst).code = e.target.value)}
+        value={viewModel.getInsertingCode(isFirst)}
+        onChange={viewModel.setInsertingCode(isFirst)}
       />
       <InputText
         type="text"
         placeholder="Value"
-        value={filter.getInserting(isFirst)?.value}
-        onChange={(e) => (filter.getInserting(isFirst).value = e.target.value)}
+        value={viewModel.getInsertingValue(isFirst)}
+        onChange={viewModel.setInsertingValue(isFirst)}
       />
-      <Button
-        type="button"
-        label="Add"
-        onClick={() => filter.addItem(isFirst)}
-      />
+      <Button type="button" onClick={viewModel.addItem(isFirst)} label="Add"/>
 
       <DataTable
-        value={isFirst ? filter.firstValues : filter.lastValues}
+        value={viewModel.values(isFirst)}
         editMode="row"
         dataKey="id"
-        onRowEditComplete={(e) => filter.editItem(e, isFirst)}
-        onRowReorder={(e) => filter.reorderItems(e, isFirst)}
+        onRowEditComplete={viewModel.onRowEditComplete(isFirst)}
+        onRowReorder={viewModel.onRowReorder(isFirst)}
         reorderableRows
       >
         <Column rowReorder headerStyle={{ width: "10%" }}></Column>
@@ -57,14 +53,14 @@ const SeqTable = observer(
         <Column field="value" header="Value" editor={textEditor}></Column>
         <Column rowEditor headerStyle={{ width: "10%" }}></Column>
         <Column
-          body={(rowData, props) => (
+          body={(_, {rowIndex}) => (
             <div className="flex flex-wrap gap-2">
               <Button
                 type="button"
                 icon="pi pi-trash"
                 severity="danger"
-                onClick={() => filter.deleteItem(props.rowIndex, isFirst)}
-              ></Button>
+                onClick={viewModel.onDeleteClick(isFirst, rowIndex)}
+              />
             </div>
           )}
           headerClassName="w-10rem"
@@ -75,37 +71,37 @@ const SeqTable = observer(
 );
 
 const SeqCard = observer(
-  ({ filter }: { filter: EventSequenceFilteringStrategy }) => (
+  ({ viewModel }: ViewModelProps<IEventSequenceFilterViewModel>) => (
     <>
       <div>First codes</div>
-      <SeqTable filter={filter} isFirst={false} />
+      <SeqTable viewModel={viewModel} isFirst={false} />
       <div>Last codes</div>
-      <SeqTable filter={filter} isFirst={true} />
+      <SeqTable viewModel={viewModel} isFirst={true} />
       <label htmlFor="maxTimeDelta">Max time delta</label>
       <InputNumber
         id="maxTimeDelta"
-        value={filter.time}
-        onValueChange={(e) => filter.setTime(e.target.value)}
+        value={viewModel.time()}
+        onValueChange={viewModel.setTime}
       />
     </>
   )
 );
 
-export const EventSequenceFilterUi = (
-  filter: EventSequenceFilteringStrategy
+export const EventSequenceFilterView = (
+  viewModel: IEventSequenceFilterViewModel
 ) => {
   const subCardTitle = (
     <div className="flex align-items-center justify-content-between">
       Filter by Event Sequence
       <div>
-        <Button className="mx-4" label="Select None" onClick={filter.reset} />
+        <Button className="mx-4" label="Reset" onClick={viewModel.reset} />
       </div>
     </div>
   );
   return (
     <div className="p-1 col-5" key="subsequence-filter">
       <Card className="h-full" title={subCardTitle}>
-        <SeqCard filter={filter} />
+        <SeqCard viewModel={viewModel} />
       </Card>
     </div>
   );
