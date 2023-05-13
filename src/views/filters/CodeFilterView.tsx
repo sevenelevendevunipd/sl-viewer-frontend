@@ -7,10 +7,10 @@ import { ViewModelProps } from "../../utils";
 
 const CodeFilterObserverView = observer(({ viewModel }: ViewModelProps<ICodeFilterViewModel>) => (
   <ListBox
-    options={viewModel.filterableCodes}
+    options={viewModel.filterableCodes()}
     multiple
     filter
-    value={viewModel.selectedCodes}
+    value={viewModel.selectedCodes()}
     onChange={viewModel.onSelectionChange}
     listStyle={{ height: "300px" }}
   />
