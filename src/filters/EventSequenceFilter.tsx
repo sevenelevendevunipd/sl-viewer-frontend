@@ -68,7 +68,6 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
     range: number
   ): LogEntry[] {
     last = last.slice().reverse();
-
     for (let i = 0; i < entries.length; i++) {
       let startFound = true;
       for (let k = 0; k < first.length && startFound; k++) {

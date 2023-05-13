@@ -23,7 +23,7 @@ export interface ILogFilteringService {
   get filtersUi(): JSX.Element[];
 }
 
-class ConcreteLogFilteringService implements ILogFilteringService {
+export class ConcreteLogFilteringService implements ILogFilteringService {
   registeredFilters: LogFilteringStrategy[] = [];
   filterUIs: JSX.Element[] = [];
   logFile: LogFile | null = null;
@@ -76,10 +76,14 @@ const LogFilteringServiceContext = createContext<
   ILogFilteringService | undefined
 >(undefined);
 
-const LogFilteringService = (props: PropsWithChildren) => {
+type LogFilteringServiceProps = {
+  logFilteringService?: ILogFilteringService;
+} & PropsWithChildren;
+
+const LogFilteringService = (props: LogFilteringServiceProps) => {
   return (
     <LogFilteringServiceContext.Provider
-      value={new ConcreteLogFilteringService()}
+      value={props.logFilteringService ?? new ConcreteLogFilteringService()}
     >
       {props.children}
     </LogFilteringServiceContext.Provider>
