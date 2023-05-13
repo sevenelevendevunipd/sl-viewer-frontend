@@ -248,7 +248,9 @@ function clipRectByRect(params: CustomSeriesRenderItemParams, rect: Rect) {
   return echarts.graphic.clipRectByRect(rect, p);
 }
 
-export function transformEvents(events: LogEntry[]): [TimelineEntry[], string[]] {
+export function transformEvents(
+  events: LogEntry[]
+): [TimelineEntry[], string[]] {
   /* REMEMBER THAT events IS SORTED IN REVERSE CHRONO ORDER */
   if (events.length == 0) {
     return [[], []];
@@ -261,7 +263,7 @@ export function transformEvents(events: LogEntry[]): [TimelineEntry[], string[]]
       return `[${e.unit},${e.subunit}] ${e.code}` as string;
     }
   );
-  
+
   const timelineEntries = [] as TimelineEntry[];
   Object.values(groupedEntries).forEach((entries, codeIndex) => {
     // if last entry in log is ON add a fake OFF entry at maxTimestamp

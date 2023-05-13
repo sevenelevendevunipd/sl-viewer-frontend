@@ -77,8 +77,8 @@ const LogFilteringServiceContext = createContext<
 >(undefined);
 
 type LogFilteringServiceProps = {
-  logFilteringService?: ILogFilteringService
-} & PropsWithChildren
+  logFilteringService?: ILogFilteringService;
+} & PropsWithChildren;
 
 const LogFilteringService = (props: LogFilteringServiceProps) => {
   return (

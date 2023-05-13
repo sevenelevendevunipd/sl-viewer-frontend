@@ -1,54 +1,46 @@
-import { jest } from '@jest/globals';
+import { jest } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import {CodeFilterUi} from '../CodeFilterUi';
+import { CodeFilterUi } from "../CodeFilterUi";
 
 import { CodeFilteringStrategy } from "../../../filters/CodeFilter";
-jest.mock('../../../filters/CodeFilter');
+jest.mock("../../../filters/CodeFilter");
 
 const logFile = {
-    filename: "filename",
-    pc_datetime: "",
-    ups_datetime: "",
-    units_subunits: {},
-    log_entries: [],
+  filename: "filename",
+  pc_datetime: "",
+  ups_datetime: "",
+  units_subunits: {},
+  log_entries: [],
 };
 
 it("Select all test CodeFilterUi", () => {
-    const filter = new CodeFilteringStrategy(logFile);
-    render(CodeFilterUi(filter));
+  const filter = new CodeFilteringStrategy(logFile);
+  render(CodeFilterUi(filter));
 
-    const btnElement = screen.getByText(/select all/i);
-    btnElement.click();
-    expect(filter.selectAll).toBeCalled();
-
+  const btnElement = screen.getByText(/select all/i);
+  btnElement.click();
+  expect(filter.selectAll).toBeCalled();
 });
 
 it("Select none test CodeFilterUi", () => {
-    const filter = new CodeFilteringStrategy(logFile);
-    render(CodeFilterUi(filter));
+  const filter = new CodeFilteringStrategy(logFile);
+  render(CodeFilterUi(filter));
 
-    const btnElement = screen.getByText(/select none/i);
-    btnElement.click();
-    expect(filter.selectNone).toBeCalled();
-
+  const btnElement = screen.getByText(/select none/i);
+  btnElement.click();
+  expect(filter.selectNone).toBeCalled();
 });
 
 it("list all codes of CodeFilteringStrategy test", () => {
-    const codes = ["code1", "code2", "code3"];
-    
-    const filter = new CodeFilteringStrategy(logFile);
-    Object.defineProperty(filter, "filterableCodes", {value: codes});
-    
+  const codes = ["code1", "code2", "code3"];
 
-    render(CodeFilterUi(filter));
-    
-    codes.forEach(code=>{
-        const codeElement = screen.getByText(code);
-        expect(codeElement).toBeInTheDocument();
-    })
-    
+  const filter = new CodeFilteringStrategy(logFile);
+  Object.defineProperty(filter, "filterableCodes", { value: codes });
+
+  render(CodeFilterUi(filter));
+
+  codes.forEach((code) => {
+    const codeElement = screen.getByText(code);
+    expect(codeElement).toBeInTheDocument();
+  });
 });
-
-
-
-
