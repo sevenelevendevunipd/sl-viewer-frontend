@@ -3,12 +3,9 @@ import { ListBox } from "primereact/listbox";
 import { Button } from "primereact/button";
 import { observer } from "mobx-react-lite";
 import { ICodeFilterViewModel } from "../../viewmodels/filters/CodeFilterViewModel";
+import { ViewModelProps } from "../../utils";
 
-type ViewModelProps = {
-  viewModel: ICodeFilterViewModel;
-};
-
-const CodeFilterObserverView = observer(({ viewModel }: ViewModelProps) => (
+const CodeFilterObserverView = observer(({ viewModel }: ViewModelProps<ICodeFilterViewModel>) => (
   <ListBox
     options={viewModel.filterableCodes}
     multiple

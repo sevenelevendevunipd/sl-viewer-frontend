@@ -48,3 +48,7 @@ export function getContrastYIQ(hexcolor: string) {
     yiq = (r * 299 + g * 587 + b * 114) / 1000;
   return yiq >= 128 ? "#000000" : "#ffffff";
 }
+
+export type ViewModelProps<T> = {
+  viewModel: T;
+};
