@@ -7,20 +7,22 @@ import { ISubunitFilterViewModel } from "../../viewmodels/filters/SubunitFilterV
 import { ViewModelProps } from "../../utils";
 
 const SubunitFilterObserverView = observer(
-  ({ viewModel }: ViewModelProps<ISubunitFilterViewModel>) => (
-    <Tree
-      value={viewModel.subunitTree}
-      selectionMode="checkbox"
-      selectionKeys={viewModel.selectedSubunits}
-      onSelectionChange={viewModel.onSelectionChange}
-      expandedKeys={viewModel.expandedKeys}
-      onToggle={viewModel.onExpandedKeysChange}
-    />
-  )
+  ({ viewModel }: ViewModelProps<ISubunitFilterViewModel>) => {
+    useEffect(viewModel.expandAll, [viewModel.subunitTree]);
+    return (
+      <Tree
+        value={viewModel.subunitTree}
+        selectionMode="checkbox"
+        selectionKeys={viewModel.selectedSubunits}
+        onSelectionChange={viewModel.onSelectionChange}
+        expandedKeys={viewModel.expandedKeys}
+        onToggle={viewModel.onExpandedKeysChange}
+      />
+    );
+  }
 );
 
 export const SubunitFilterView = (viewModel: ISubunitFilterViewModel) => {
-  useEffect(viewModel.expandAll);
   const subunitCardTitle = (
     <div className="flex align-items-center justify-content-between">
       Filter by SubUnit

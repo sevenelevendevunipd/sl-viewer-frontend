@@ -38,9 +38,9 @@ class ConcreteSubunitFilterViewModel implements ISubunitFilterViewModel {
       setExpandedKeys: action.bound,
       onExpandedKeysChange: action.bound,
       expandAll: action.bound,
-      onSelectionChange: false,
-      selectAll: false,
-      selectNone: false,
+      onSelectionChange: action.bound,
+      selectAll: action.bound,
+      selectNone: action.bound,
     });
   }
 
