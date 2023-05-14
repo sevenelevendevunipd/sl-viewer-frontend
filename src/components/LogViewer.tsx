@@ -10,7 +10,7 @@ import { CodeFilterView } from "../views/filters/CodeFilterView";
 import { EventSequenceFilteringStrategy } from "../filters/EventSequenceFilter";
 import { EventSequenceFilterView } from "../views/filters/EventSequenceFilterView";
 import { FirmwareFilteringStrategy } from "../filters/FirmwareFilter";
-import { FirmwareFilterUi as FirmwareFilterView } from "../views/filters/FirmwareFilterView";
+import { FirmwareFilterView as FirmwareFilterView } from "../views/filters/FirmwareFilterView";
 import { SubunitFilteringStrategy } from "../filters/SubunitFilter";
 import { SubunitFilterView } from "../views/filters/SubunitFilterView";
 import { DateTimeFilteringStrategy } from "../filters/DateTimeFilter";

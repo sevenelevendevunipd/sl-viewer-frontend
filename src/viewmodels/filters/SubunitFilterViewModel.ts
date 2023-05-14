@@ -23,7 +23,7 @@ export interface ISubunitFilterViewModel {
   selectNone(): void;
 }
 
-class ConcreteSubunitFilterViewModel implements ISubunitFilterViewModel {
+export class ConcreteSubunitFilterViewModel implements ISubunitFilterViewModel {
   filter: SubunitFilteringStrategy;
   expandedKeys: TreeExpandedKeysType = {};
 

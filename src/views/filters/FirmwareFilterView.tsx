@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { IFirmwareFilterViewModel } from "../../viewmodels/filters/FirmwareFilterViewModel";
 import { ViewModelProps } from "../../utils";
 
-const FirmwareFilterObserverUi = observer(({ viewModel }: ViewModelProps<IFirmwareFilterViewModel>) => (
+const FirmwareFilterObserverView = observer(({ viewModel }: ViewModelProps<IFirmwareFilterViewModel>) => (
   <ListBox
     options={viewModel.options}
     multiple
@@ -16,7 +16,7 @@ const FirmwareFilterObserverUi = observer(({ viewModel }: ViewModelProps<IFirmwa
   />
 ));
 
-export const FirmwareFilterUi = (viewModel: IFirmwareFilterViewModel) => {
+export const FirmwareFilterView = (viewModel: IFirmwareFilterViewModel) => {
   const firmwareCardTitle = (
     <div className="flex align-items-center justify-content-between">
       Filter by Firmware
@@ -37,7 +37,7 @@ export const FirmwareFilterUi = (viewModel: IFirmwareFilterViewModel) => {
   return (
     <div className="p-1 col-4" key="firmware-filter">
       <Card className="h-full" title={firmwareCardTitle}>
-        <FirmwareFilterObserverUi viewModel={viewModel} />
+        <FirmwareFilterObserverView viewModel={viewModel} />
       </Card>
     </div>
   );
