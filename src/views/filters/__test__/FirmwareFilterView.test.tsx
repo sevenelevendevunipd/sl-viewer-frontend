@@ -9,7 +9,7 @@ const viewModelFactory = () => ({
   selectNone: jest.fn(),
   selection: jest.fn(),
   onSelectionChange: jest.fn(),
-  options: [],
+  options: jest.fn(),
 })
 
 it("Select all test FirmwareFilterView", () => {

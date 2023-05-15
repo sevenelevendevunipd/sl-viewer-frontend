@@ -4,7 +4,7 @@ import user from "@testing-library/user-event";
 import { EventSequenceFilterView } from "../EventSequenceFilterView";
 import { IEventSequenceFilterViewModel } from "../../../viewmodels/filters/EventSequenceFilterViewModel";
 
-describe("EventSequenceFilterUi", () => {
+describe("EventSequenceFilterView", () => {
   let viewModel: jest.Mocked<IEventSequenceFilterViewModel>;
 
   beforeEach(() => {
@@ -33,7 +33,7 @@ describe("EventSequenceFilterUi", () => {
     expect(viewModel.addItem).toBeCalledTimes(buttons.length);
   });
 
-  it("Take input on code EventSequenceFilterUi", () => {
+  it("Take input on code EventSequenceFilterView", () => {
     const codeInputs = screen.getAllByPlaceholderText("Code");
     const codeValues = screen.getAllByPlaceholderText("Value");
     const buttons = screen.getAllByText(/Add/i);

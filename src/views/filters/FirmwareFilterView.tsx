@@ -7,7 +7,7 @@ import { ViewModelProps } from "../../utils";
 
 const FirmwareFilterObserverView = observer(({ viewModel }: ViewModelProps<IFirmwareFilterViewModel>) => (
   <ListBox
-    options={viewModel.options}
+    options={viewModel.options()}
     multiple
     filter
     value={viewModel.selection()}

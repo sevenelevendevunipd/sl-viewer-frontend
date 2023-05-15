@@ -8,14 +8,6 @@ jest.mock("../../../viewmodels/filters/SubunitFilterViewModel");
 
 const viewModelFactory = () => new ConcreteSubunitFilterViewModel({} as any);
 
-const logFile = {
-  filename: "filename",
-  pc_datetime: "",
-  ups_datetime: "",
-  units_subunits: {},
-  log_entries: [],
-};
-
 it("Select all test Subunit", () => {
   const viewModel = viewModelFactory();
 
