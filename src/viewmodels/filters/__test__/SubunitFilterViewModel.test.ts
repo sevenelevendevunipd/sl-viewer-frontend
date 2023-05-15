@@ -1,86 +1,87 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { SubunitFilteringStrategy } from "../../../filters/SubunitFilter";
-import { SubunitFilterViewModel, ISubunitFilterViewModel } from "../SubunitFilterViewModel";
+import {
+  SubunitFilterViewModel,
+  ISubunitFilterViewModel,
+} from "../SubunitFilterViewModel";
 
 jest.mock("../../../filters/SubunitFilter");
 
 describe("SubunitFilterViewModel", () => {
-    let viewModel: ISubunitFilterViewModel;
-    let filter: jest.Mocked<SubunitFilteringStrategy>;
+  let viewModel: ISubunitFilterViewModel;
+  let filter: jest.Mocked<SubunitFilteringStrategy>;
 
-    beforeEach(() => {
-        filter = new SubunitFilteringStrategy({} as any) as typeof filter;
-        viewModel = SubunitFilterViewModel(filter);
-    })
+  beforeEach(() => {
+    filter = new SubunitFilteringStrategy({} as any) as typeof filter;
+    viewModel = SubunitFilterViewModel(filter);
+  });
 
-    it("suunitTree", () => {
-        const subunitTree = Symbol();
+  it("suunitTree", () => {
+    const subunitTree = Symbol();
 
-        Object.defineProperty(filter, "subunitTree", {value: subunitTree});
+    Object.defineProperty(filter, "subunitTree", { value: subunitTree });
 
-        expect(viewModel.subunitTree).toBe(subunitTree);
-    })
+    expect(viewModel.subunitTree).toBe(subunitTree);
+  });
 
-    it("selectedSubunits", () => {
-        const selectedSubunits = Symbol();
+  it("selectedSubunits", () => {
+    const selectedSubunits = Symbol();
 
-        Object.defineProperty(filter, "selectedSubunits", {value: selectedSubunits});
+    Object.defineProperty(filter, "selectedSubunits", {
+      value: selectedSubunits,
+    });
 
-        expect(viewModel.selectedSubunits).toBe(selectedSubunits);
-    })
+    expect(viewModel.selectedSubunits).toBe(selectedSubunits);
+  });
 
-    it("setExpandedKeys", () => {
-        const expandedKeys = Symbol();
+  it("setExpandedKeys", () => {
+    const expandedKeys = Symbol();
 
-        viewModel.setExpandedKeys(expandedKeys as any);
+    viewModel.setExpandedKeys(expandedKeys as any);
 
-        expect(viewModel.expandedKeys).toBe(expandedKeys);
-    })
+    expect(viewModel.expandedKeys).toBe(expandedKeys);
+  });
 
-    it("onExpandedKeysChange", () => {
-        const expandedKeys = Symbol();
+  it("onExpandedKeysChange", () => {
+    const expandedKeys = Symbol();
 
-        viewModel.onExpandedKeysChange({value: expandedKeys} as any);
+    viewModel.onExpandedKeysChange({ value: expandedKeys } as any);
 
-        expect(viewModel.expandedKeys).toBe(expandedKeys);
-    })
+    expect(viewModel.expandedKeys).toBe(expandedKeys);
+  });
 
-    it("expandAll", () => {
-        const subunitTree = [
-            {key: "lol"},
-            {key: "uhm"},
-            {key: "test"},
-        ]
+  it("expandAll", () => {
+    const subunitTree = [{ key: "lol" }, { key: "uhm" }, { key: "test" }];
 
-        Object.defineProperty(filter, "subunitTree", {value: subunitTree});
+    Object.defineProperty(filter, "subunitTree", { value: subunitTree });
 
-        viewModel.expandAll();
-        
-        expect(viewModel.expandedKeys).toEqual({
-            lol: true,
-            uhm: true,
-            test: true,
-        });
-    })
+    viewModel.expandAll();
 
-    it("onSelectionChange", () => {
-        const selectionKeys = Symbol();
+    expect(viewModel.expandedKeys).toEqual({
+      lol: true,
+      uhm: true,
+      test: true,
+    });
+  });
 
-        viewModel.onSelectionChange({value: selectionKeys} as any);
+  it("onSelectionChange", () => {
+    const selectionKeys = Symbol();
 
-        expect(filter.setSelection).toBeCalledWith(selectionKeys);
-    })
+    viewModel.onSelectionChange({ value: selectionKeys } as any);
 
-    it("selectAll", () => {
-        viewModel.selectAll();
+    expect(filter.setSelection).toBeCalledWith(selectionKeys);
+  });
 
-        expect(filter.selectAll).toBeCalled();
-    })
+  it("selectAll", () => {
+    viewModel.selectAll();
 
-    it("selectNone", () => {
-        viewModel.selectNone();
+    expect(filter.selectAll).toBeCalled();
+  });
 
-        expect(filter.selectNone).toBeCalled();
-    })
-})
+  it("selectNone", () => {
+    viewModel.selectNone();
+
+    expect(filter.selectNone).toBeCalled();
+  });
+});

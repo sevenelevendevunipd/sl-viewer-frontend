@@ -36,15 +36,25 @@ function LogViewer(props: LogViewerProps) {
 
     const datetimeFilter = new DateTimeFilteringStrategy(logFile);
     const datetimeFilterViewModel = DateTimeFilterViewModel(datetimeFilter);
-    filteringService.register(datetimeFilter, DateTimeFilterView(datetimeFilterViewModel));
+    filteringService.register(
+      datetimeFilter,
+      DateTimeFilterView(datetimeFilterViewModel)
+    );
 
     const eventSequenceFilter = new EventSequenceFilteringStrategy(logFile);
-    const eventSequenceFilterViewModel = EventSequenceFilterViewModel(eventSequenceFilter);
-    filteringService.register(eventSequenceFilter, EventSequenceFilterView(eventSequenceFilterViewModel));
+    const eventSequenceFilterViewModel =
+      EventSequenceFilterViewModel(eventSequenceFilter);
+    filteringService.register(
+      eventSequenceFilter,
+      EventSequenceFilterView(eventSequenceFilterViewModel)
+    );
 
     const firmwareFilter = new FirmwareFilteringStrategy(logFile);
     const firmwareFilterViewModel = FirmwareFilterViewModel(firmwareFilter);
-    filteringService.register(firmwareFilter, FirmwareFilterView(firmwareFilterViewModel));
+    filteringService.register(
+      firmwareFilter,
+      FirmwareFilterView(firmwareFilterViewModel)
+    );
 
     const codeFilter = new CodeFilteringStrategy(logFile);
     const codeFilterViewModel = CodeFilterViewModel(codeFilter);
@@ -52,7 +62,10 @@ function LogViewer(props: LogViewerProps) {
 
     const subunitFilter = new SubunitFilteringStrategy(logFile);
     const subunitFilterViewModel = SubunitFilterViewModel(subunitFilter);
-    filteringService.register(subunitFilter, SubunitFilterView(subunitFilterViewModel));
+    filteringService.register(
+      subunitFilter,
+      SubunitFilterView(subunitFilterViewModel)
+    );
 
     return filteringService.removeFilters;
   }, [logFile]);

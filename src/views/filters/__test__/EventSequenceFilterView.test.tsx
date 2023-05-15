@@ -21,6 +21,7 @@ describe("EventSequenceFilterView", () => {
       time: jest.fn(),
       setTime: jest.fn(),
       reset: jest.fn(),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
     render(EventSequenceFilterView(viewModel));
   });

@@ -4,28 +4,30 @@ import { CalendarChangeEvent } from "primereact/calendar";
 import { IDateTimeFilterViewModel } from "../../viewmodels/filters/DateTimeFilterViewModel";
 import CalendarHOC from "../../components/CalendarHOC";
 
-const CalendarDoubleHOC = observer(({
-  id,
-  value,
-  onChange,
-  minDate,
-  maxDate
-}: {
-  id: string,
-  value: () => Date,
-  onChange: (e: CalendarChangeEvent) => void,
-  minDate: () => Date,
-  maxDate: () => Date
-}) => (
-  <CalendarHOC
-    id={id}
-    style={{ width: "100%" }}
-    value={value()}
-    onChange={onChange}
-    minDate={minDate()}
-    maxDate={maxDate()}
-  />
-))
+const CalendarDoubleHOC = observer(
+  ({
+    id,
+    value,
+    onChange,
+    minDate,
+    maxDate,
+  }: {
+    id: string;
+    value: () => Date;
+    onChange: (e: CalendarChangeEvent) => void;
+    minDate: () => Date;
+    maxDate: () => Date;
+  }) => (
+    <CalendarHOC
+      id={id}
+      style={{ width: "100%" }}
+      value={value()}
+      onChange={onChange}
+      minDate={minDate()}
+      maxDate={maxDate()}
+    />
+  )
+);
 
 export const DateTimeFilterView = (viewModel: IDateTimeFilterViewModel) => {
   const dateTimeCardTitle = (

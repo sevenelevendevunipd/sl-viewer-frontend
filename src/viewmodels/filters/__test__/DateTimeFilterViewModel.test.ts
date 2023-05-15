@@ -1,88 +1,98 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DateTimeFilteringStrategy } from "../../../filters/DateTimeFilter";
-import { DateTimeFilterViewModel, IDateTimeFilterViewModel } from "../DateTimeFilterViewModel";
+import {
+  DateTimeFilterViewModel,
+  IDateTimeFilterViewModel,
+} from "../DateTimeFilterViewModel";
 
 jest.mock("../../../filters/DateTimeFilter");
 
 describe("DateTimeFilterViewModel", () => {
-    let viewModel: IDateTimeFilterViewModel;
-    let filter: jest.Mocked<DateTimeFilteringStrategy>;
+  let viewModel: IDateTimeFilterViewModel;
+  let filter: jest.Mocked<DateTimeFilteringStrategy>;
 
-    beforeEach(() => {
-        filter = new DateTimeFilteringStrategy({} as any) as typeof filter;
-        viewModel = DateTimeFilterViewModel(filter);
+  beforeEach(() => {
+    filter = new DateTimeFilteringStrategy({} as any) as typeof filter;
+    viewModel = DateTimeFilterViewModel(filter);
+  });
+
+  it("minValue", () => {
+    const timestamp = new Date();
+
+    Object.defineProperty(filter, "minSelectedTimestamp", { value: timestamp });
+
+    expect(viewModel.minValue()).toBe(timestamp);
+  });
+
+  it("onMinValueChange", () => {
+    const minTimestamp = new Date();
+    const maxTimestamp = new Date();
+
+    Object.defineProperty(filter, "maxSelectedTimestamp", {
+      value: maxTimestamp,
     });
 
-    it("minValue", () => {
-        const timestamp = new Date();
+    viewModel.onMinValueChange({ value: minTimestamp } as any);
+    expect(filter.setSelected).toBeCalledWith(minTimestamp, maxTimestamp);
+  });
 
-        Object.defineProperty(filter, "minSelectedTimestamp", {value: timestamp});
+  it("minCalendarRangeMin", () => {
+    const timestamp = new Date();
 
-        expect(viewModel.minValue()).toBe(timestamp);
-    })
+    Object.defineProperty(filter, "minTimestamp", { value: timestamp });
 
-    it("onMinValueChange", () => {
-        const minTimestamp = new Date();
-        const maxTimestamp = new Date();
-        
-        Object.defineProperty(filter, "maxSelectedTimestamp", {value: maxTimestamp});
+    expect(viewModel.minCalendarRangeMin()).toBe(timestamp);
+  });
 
-        viewModel.onMinValueChange({value: minTimestamp} as any)
-        expect(filter.setSelected).toBeCalledWith(minTimestamp, maxTimestamp);
-    })
+  it("minCalendarRangeMax", () => {
+    const maxTimestamp = new Date(2023, 4, 15);
+    const maxSelectedTimestamp = new Date(2023, 1, 15);
 
-    it("minCalendarRangeMin", () => {
-        const timestamp = new Date();
-
-        Object.defineProperty(filter, "minTimestamp", {value: timestamp});
-
-        expect(viewModel.minCalendarRangeMin()).toBe(timestamp);
-    })
-
-    it("minCalendarRangeMax", () => {
-        const maxTimestamp = new Date(2023, 4, 15);
-        const maxSelectedTimestamp = new Date(2023, 1, 15);
-
-        Object.defineProperty(filter, "maxTimestamp", {value: maxTimestamp});
-        Object.defineProperty(filter, "maxSelectedTimestamp", {value: maxSelectedTimestamp});
-
-        expect(viewModel.minCalendarRangeMax()).toBe(maxSelectedTimestamp);
+    Object.defineProperty(filter, "maxTimestamp", { value: maxTimestamp });
+    Object.defineProperty(filter, "maxSelectedTimestamp", {
+      value: maxSelectedTimestamp,
     });
 
-    it("maxValue", () => {
-        const timestamp = new Date();
+    expect(viewModel.minCalendarRangeMax()).toBe(maxSelectedTimestamp);
+  });
 
-        Object.defineProperty(filter, "maxSelectedTimestamp", {value: timestamp});
+  it("maxValue", () => {
+    const timestamp = new Date();
 
-        expect(viewModel.maxValue()).toBe(timestamp);
-    })
+    Object.defineProperty(filter, "maxSelectedTimestamp", { value: timestamp });
 
-    it("onMaxValueChange", () => {
-        const minTimestamp = new Date();
-        const maxTimestamp = new Date();
-        
-        Object.defineProperty(filter, "minSelectedTimestamp", {value: minTimestamp});
-        
-        viewModel.onMaxValueChange({value: maxTimestamp} as any)
-        expect(filter.setSelected).toBeCalledWith(minTimestamp, maxTimestamp);
-    })
+    expect(viewModel.maxValue()).toBe(timestamp);
+  });
 
-    it("maxCalendarRangeMin", () => {
-        const minTimestamp = new Date(2023, 1, 15);
-        const minSelectedTimestamp = new Date(2023, 4, 15);
+  it("onMaxValueChange", () => {
+    const minTimestamp = new Date();
+    const maxTimestamp = new Date();
 
-        Object.defineProperty(filter, "minTimestamp", {value: minTimestamp});
-        Object.defineProperty(filter, "minSelectedTimestamp", {value: minSelectedTimestamp});
-
-        expect(viewModel.maxCalendarRangeMin()).toBe(minSelectedTimestamp);
+    Object.defineProperty(filter, "minSelectedTimestamp", {
+      value: minTimestamp,
     });
 
-    it("maxCalendarRangeMax", () => {
-        const timestamp = new Date();
+    viewModel.onMaxValueChange({ value: maxTimestamp } as any);
+    expect(filter.setSelected).toBeCalledWith(minTimestamp, maxTimestamp);
+  });
 
-        Object.defineProperty(filter, "maxTimestamp", {value: timestamp});
+  it("maxCalendarRangeMin", () => {
+    const minTimestamp = new Date(2023, 1, 15);
+    const minSelectedTimestamp = new Date(2023, 4, 15);
 
-        expect(viewModel.maxCalendarRangeMax()).toBe(timestamp);
-    })
+    Object.defineProperty(filter, "minTimestamp", { value: minTimestamp });
+    Object.defineProperty(filter, "minSelectedTimestamp", {
+      value: minSelectedTimestamp,
+    });
 
-})
+    expect(viewModel.maxCalendarRangeMin()).toBe(minSelectedTimestamp);
+  });
+
+  it("maxCalendarRangeMax", () => {
+    const timestamp = new Date();
+
+    Object.defineProperty(filter, "maxTimestamp", { value: timestamp });
+
+    expect(viewModel.maxCalendarRangeMax()).toBe(timestamp);
+  });
+});

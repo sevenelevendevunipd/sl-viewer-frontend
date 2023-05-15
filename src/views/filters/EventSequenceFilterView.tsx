@@ -38,7 +38,7 @@ const SeqTable = observer(
         value={viewModel.getInsertingValue(isFirst)}
         onChange={viewModel.setInsertingValue(isFirst)}
       />
-      <Button type="button" onClick={viewModel.addItem(isFirst)} label="Add"/>
+      <Button type="button" onClick={viewModel.addItem(isFirst)} label="Add" />
 
       <DataTable
         value={viewModel.values(isFirst)}
@@ -53,7 +53,7 @@ const SeqTable = observer(
         <Column field="value" header="Value" editor={textEditor}></Column>
         <Column rowEditor headerStyle={{ width: "10%" }}></Column>
         <Column
-          body={(_, {rowIndex}) => (
+          body={(_, { rowIndex }) => (
             <div className="flex flex-wrap gap-2">
               <Button
                 type="button"

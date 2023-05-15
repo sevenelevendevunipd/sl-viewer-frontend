@@ -5,16 +5,18 @@ import { observer } from "mobx-react-lite";
 import { ICodeFilterViewModel } from "../../viewmodels/filters/CodeFilterViewModel";
 import { ViewModelProps } from "../../utils";
 
-const CodeFilterObserverView = observer(({ viewModel }: ViewModelProps<ICodeFilterViewModel>) => (
-  <ListBox
-    options={viewModel.filterableCodes()}
-    multiple
-    filter
-    value={viewModel.selectedCodes()}
-    onChange={viewModel.onSelectionChange}
-    listStyle={{ height: "300px" }}
-  />
-));
+const CodeFilterObserverView = observer(
+  ({ viewModel }: ViewModelProps<ICodeFilterViewModel>) => (
+    <ListBox
+      options={viewModel.filterableCodes()}
+      multiple
+      filter
+      value={viewModel.selectedCodes()}
+      onChange={viewModel.onSelectionChange}
+      listStyle={{ height: "300px" }}
+    />
+  )
+);
 
 export const CodeFilterView = (viewModel: ICodeFilterViewModel) => {
   const codeCardTitle = (

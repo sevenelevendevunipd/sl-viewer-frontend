@@ -76,7 +76,7 @@ describe("EventSequenceFilterViewModel", () => {
       const obj = {} as any;
       filter.getInserting.mockReturnValue(obj);
 
-      viewModel.setInsertingCode(true)({target: {value: code}} as any);
+      viewModel.setInsertingCode(true)({ target: { value: code } } as any);
 
       expect(filter.getInserting).toBeCalledWith(true);
       expect(filter.getInserting).toBeCalledTimes(1);
@@ -87,7 +87,7 @@ describe("EventSequenceFilterViewModel", () => {
       const obj = {} as any;
       filter.getInserting.mockReturnValue(obj);
 
-      viewModel.setInsertingCode(false)({target: {value: code}} as any);
+      viewModel.setInsertingCode(false)({ target: { value: code } } as any);
 
       expect(filter.getInserting).toBeCalledWith(false);
       expect(filter.getInserting).toBeCalledTimes(1);
@@ -105,7 +105,7 @@ describe("EventSequenceFilterViewModel", () => {
       const obj = {} as any;
       filter.getInserting.mockReturnValue(obj);
 
-      viewModel.setInsertingValue(true)({target: {value: value}} as any);
+      viewModel.setInsertingValue(true)({ target: { value: value } } as any);
 
       expect(filter.getInserting).toBeCalledWith(true);
       expect(filter.getInserting).toBeCalledTimes(1);
@@ -116,7 +116,7 @@ describe("EventSequenceFilterViewModel", () => {
       const obj = {} as any;
       filter.getInserting.mockReturnValue(obj);
 
-      viewModel.setInsertingValue(false)({target: {value: value}} as any);
+      viewModel.setInsertingValue(false)({ target: { value: value } } as any);
 
       expect(filter.getInserting).toBeCalledWith(false);
       expect(filter.getInserting).toBeCalledTimes(1);
@@ -130,72 +130,72 @@ describe("EventSequenceFilterViewModel", () => {
     });
 
     it("first", () => {
-      viewModel.addItem(true)()
+      viewModel.addItem(true)();
       expect(filter.addItem).toBeCalledTimes(1);
       expect(filter.addItem).toBeCalledWith(true);
     });
     it("second", () => {
-      viewModel.addItem(false)()
+      viewModel.addItem(false)();
       expect(filter.addItem).toBeCalledTimes(1);
       expect(filter.addItem).toBeCalledWith(false);
     });
   });
-  
+
   describe("values", () => {
     it("first", () => {
-      const value = Symbol() as any
+      const value = Symbol() as any;
       filter.firstValues = value;
       expect(viewModel.values(true)).toBe(value);
     });
     it("second", () => {
-      const value = Symbol() as any
+      const value = Symbol() as any;
       filter.lastValues = value;
       expect(viewModel.values(false)).toBe(value);
     });
-  })
+  });
 
   it("onRowEditComplete", () => {
     const event = Symbol() as any;
     viewModel.onRowEditComplete(true)(event);
     expect(filter.editItem).toBeCalledWith(event, true);
-  })
+  });
 
   it("onRowReorder", () => {
     const event = Symbol() as any;
     viewModel.onRowReorder(true)(event);
     expect(filter.reorderItems).toBeCalledWith(event, true);
-  })
+  });
 
   it("onDeleteClick", () => {
     viewModel.onDeleteClick(true, 2)();
     expect(filter.deleteItem).toBeCalledWith(2, true);
-  })
+  });
 
   it("time", () => {
     const time = Symbol() as any;
     filter.time = time;
     expect(viewModel.time()).toBe(time);
-  })
+  });
 
   describe("setTime", () => {
     beforeEach(() => {
       filter.setTime.mockReset();
-    })
+    });
 
     it("non null", () => {
       const time = 123;
-      viewModel.setTime({target: {value: time}} as any);
+      viewModel.setTime({ target: { value: time } } as any);
       expect(filter.setTime).toBeCalledWith(time);
-    })
-    
+    });
+
     it("null", () => {
-      viewModel.setTime({target: {value: null}} as any);
+      viewModel.setTime({ target: { value: null } } as any);
       expect(filter.setTime).toBeCalledWith(0);
-    })
-  })
+    });
+  });
 
   it("reset", () => {
-    viewModel.reset()
+    viewModel.reset();
     expect(filter.reset).toBeCalled();
-  })
+  });
 });

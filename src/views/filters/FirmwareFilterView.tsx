@@ -5,16 +5,18 @@ import { observer } from "mobx-react-lite";
 import { IFirmwareFilterViewModel } from "../../viewmodels/filters/FirmwareFilterViewModel";
 import { ViewModelProps } from "../../utils";
 
-const FirmwareFilterObserverView = observer(({ viewModel }: ViewModelProps<IFirmwareFilterViewModel>) => (
-  <ListBox
-    options={viewModel.options()}
-    multiple
-    filter
-    value={viewModel.selection()}
-    onChange={viewModel.onSelectionChange}
-    listStyle={{ height: "300px" }}
-  />
-));
+const FirmwareFilterObserverView = observer(
+  ({ viewModel }: ViewModelProps<IFirmwareFilterViewModel>) => (
+    <ListBox
+      options={viewModel.options()}
+      multiple
+      filter
+      value={viewModel.selection()}
+      onChange={viewModel.onSelectionChange}
+      listStyle={{ height: "300px" }}
+    />
+  )
+);
 
 export const FirmwareFilterView = (viewModel: IFirmwareFilterViewModel) => {
   const firmwareCardTitle = (

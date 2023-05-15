@@ -5,8 +5,7 @@ import { SubunitFilterView } from "../SubunitFilterView";
 import { ConcreteSubunitFilterViewModel } from "../../../viewmodels/filters/SubunitFilterViewModel";
 jest.mock("../../../viewmodels/filters/SubunitFilterViewModel");
 
-
-const viewModelFactory = () => new ConcreteSubunitFilterViewModel({} as any);
+const viewModelFactory = () => new ConcreteSubunitFilterViewModel({} as never);
 
 it("Select all test Subunit", () => {
   const viewModel = viewModelFactory();

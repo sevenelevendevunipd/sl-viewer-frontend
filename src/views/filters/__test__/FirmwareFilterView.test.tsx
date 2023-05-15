@@ -10,11 +10,11 @@ const viewModelFactory = () => ({
   selection: jest.fn(),
   onSelectionChange: jest.fn(),
   options: jest.fn(),
-})
+});
 
 it("Select all test FirmwareFilterView", () => {
   const viewModel = viewModelFactory();
-  
+
   render(FirmwareFilterView(viewModel as IFirmwareFilterViewModel));
 
   const btnElement = screen.getByText(/select all/i);

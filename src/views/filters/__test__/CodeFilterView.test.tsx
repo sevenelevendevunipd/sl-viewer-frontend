@@ -13,7 +13,6 @@ const viewModelFactory = () => ({
 });
 
 it("Select all test CodeFilterUi", () => {
-
   const viewModel = viewModelFactory();
   render(CodeFilterView(viewModel as ICodeFilterViewModel));
 
@@ -23,7 +22,6 @@ it("Select all test CodeFilterUi", () => {
 });
 
 it("Select none test CodeFilterUi", () => {
-
   const viewModel = viewModelFactory();
   render(CodeFilterView(viewModel as ICodeFilterViewModel));
 
