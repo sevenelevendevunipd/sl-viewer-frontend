@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CodeFilterViewModel, ICodeFilterViewModel } from "../CodeFilterViewModel"
 import { CodeFilteringStrategy } from "../../../filters/CodeFilter";
 import { ListBoxChangeEvent } from "primereact/listbox";
