@@ -182,10 +182,6 @@ describe("EventSequenceFilteringStrategy", () => {
       eventSequenceFilteringStrategy.setTime(100);
       expect(eventSequenceFilteringStrategy.time).toEqual(100);
     });
-    it("should set the time to 0 if empty", () => {
-      eventSequenceFilteringStrategy.setTime(null);
-      expect(eventSequenceFilteringStrategy.time).toEqual(0);
-    });
   });
   describe("get Inserting", () => {
     it("should return insertingFirst if true", () => {

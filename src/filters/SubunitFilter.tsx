@@ -32,7 +32,7 @@ function selectAllTreeEntries(entries: TreeNode[]) {
 }
 
 export class SubunitFilteringStrategy implements LogFilteringStrategy {
-  readonly subunitTree: TreeNode[] = [];
+  readonly subunitTree: TreeNode[];
   selectedSubunits: TreeCheckboxSelectionKeys = {};
 
   constructor(logFile: LogFile) {
@@ -42,6 +42,7 @@ export class SubunitFilteringStrategy implements LogFilteringStrategy {
       filterSet: computed,
       filter: false,
       reset: action.bound,
+      setSelection: action.bound,
       selectAll: action.bound,
       selectNone: action.bound,
     });
@@ -75,6 +76,9 @@ export class SubunitFilteringStrategy implements LogFilteringStrategy {
   }
   reset() {
     this.selectAll();
+  }
+  setSelection(selection: TreeCheckboxSelectionKeys) {
+    this.selectedSubunits = selection;
   }
   selectAll() {
     this.selectedSubunits = selectAllTreeEntries(this.subunitTree);

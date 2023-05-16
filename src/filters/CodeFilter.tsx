@@ -21,7 +21,7 @@ export class CodeFilteringStrategy implements LogFilteringStrategy {
       reset: action.bound,
       selectAll: action.bound,
       selectNone: action.bound,
-      setSelection: action,
+      setSelection: action.bound,
     });
     this.filterableCodes = [
       ...new Set(logFile.log_entries.map((entry) => entry.code)),

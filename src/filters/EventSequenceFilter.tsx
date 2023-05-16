@@ -11,7 +11,7 @@ import {
 
 type LogFile = LogParserResponse_4dfe1dd_LogFile;
 type LogEntry = LogParserResponse_4dfe1dd_LogEntry;
-type SearchEntry = {
+export type SearchEntry = {
   code: string;
   value: string;
 };
@@ -126,8 +126,8 @@ export class EventSequenceFilteringStrategy implements LogFilteringStrategy {
     this.time = 1000;
   }
 
-  setTime(t?: number | null) {
-    this.time = t ?? 0;
+  setTime(t: number) {
+    this.time = t;
   }
 
   getInserting(isFirst: boolean): SearchEntry {
