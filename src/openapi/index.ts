@@ -15,4 +15,4 @@ export type { LogUpload_f5eab8c } from './models/LogUpload_f5eab8c';
 export type { ValidationError_6a07bef } from './models/ValidationError_6a07bef';
 export type { ValidationError_6a07bef_ValidationErrorElement } from './models/ValidationError_6a07bef_ValidationErrorElement';
 
-export { DefaultService } from './services/DefaultService';
+export { LogParsingService } from './services/LogParsingService';

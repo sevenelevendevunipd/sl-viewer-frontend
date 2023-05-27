@@ -1,9 +1,9 @@
 import { createContext, useContext, PropsWithChildren } from "react";
 import {
   ApiError,
-  DefaultService,
   LogParserError_581e5e4,
   LogParserResponse_4dfe1dd,
+  LogParsingService as LogParsingApi,
   ValidationError_6a07bef,
 } from "../openapi";
 
@@ -33,7 +33,7 @@ const LogParsingService = (props: PropsWithChildren) => {
       }
       const file = files[0];
       try {
-        return await DefaultService.postApiAnalyzeLog({ log: file });
+        return await LogParsingApi.postApiParseLog({ log: file });
       } catch (error) {
         if (error instanceof ApiError) {
           if (error.body instanceof Array) {
