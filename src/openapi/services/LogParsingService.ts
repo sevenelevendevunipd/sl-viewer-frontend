@@ -8,20 +8,20 @@ import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
-export class DefaultService {
+export class LogParsingService {
 
     /**
-     * analyze_log <POST>
+     * parse_log <POST>
      * @param formData
      * @returns LogParserResponse_4dfe1dd OK
      * @throws ApiError
      */
-    public static postApiAnalyzeLog(
+    public static postApiParseLog(
         formData?: LogUpload_f5eab8c,
     ): CancelablePromise<LogParserResponse_4dfe1dd> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/analyze_log',
+            url: '/api/parse_log',
             formData: formData,
             mediaType: 'multipart/form-data',
             errors: {
