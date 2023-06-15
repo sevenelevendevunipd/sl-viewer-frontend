@@ -14,6 +14,10 @@ type ObserverProps = {
 function createStyle(bgColor: string) {
   const style = document.getElementsByTagName("style");
   const colorTag = bgColor.replace("#", "row-");
+  if (style.length == 0) {
+    document.body.appendChild(document.createElement("style"));
+    return createStyle(bgColor);
+  }
   const pos = style[0].innerHTML.indexOf(colorTag);
   if (pos < 0)
     style[0].innerHTML += `.${colorTag} {
